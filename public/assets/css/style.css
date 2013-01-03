@@ -28,20 +28,14 @@
 .bottomline .deselectstartover {
     float: right;
 }
-#language {
-    width: 400px;
+
+.facetlist {
+    height: 200px;
+    overflow: scroll;
 }
-#language .facetlist{
-    column-count: 2;
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    -o-column-count: 2;
-}
+
 .item {
-    width: 150px;
-    height: 250px;
-    margin: 0 10px 10px 0;
-    display: inline-block;
+    margin: 0 10px 0px 0;
     vertical-align: top;
 }
 .item h4 {
