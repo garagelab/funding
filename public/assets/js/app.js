@@ -40,8 +40,8 @@ var App = function App() {
                 facets           : {
                     'provinces' : 'Provincias',
                     'beneficiaries' : 'Beneficiarios',
-                    'mecanisms' : 'Mecanismo',
-                    'topics' : 'Tema'
+                    'mecanisms' : 'Mecanismos',
+                    'topics' : 'Temas'
                 },
                 resultSelector   : '#results',
                 facetSelector    : '#facets',
