@@ -20,6 +20,10 @@
     color: #7e7b7f;
 }
 
+#beneficiaries .facetlist, #mecanisms .facetlist, #topics .facetlist {
+    overflow-y: hidden;
+}
+
 .bottomline {
     padding: 10px;
     font-weight: bold;
@@ -77,7 +81,6 @@
     background-color: #DDD;
     margin: 0 0 10px 0;
     padding: 10px;
-    width: 100%;
     display: block;
     text-align: center;
     cursor: pointer;
