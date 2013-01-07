@@ -26,7 +26,7 @@ var App = function App() {
             data.table.rows.map(self.addItem, self);
             var item_template =
                 '<div class="item">' +
-                    '<h4><%= obj.title %></h4>' +
+                    '<h3><%= obj.title %></h3>' +
                     '<p><strong>Detalle: </strong><%= obj.details %></p>' +
                     '<p><strong>Objetivos: </strong><%= obj.objectives %></p>' +
                     '<p><strong>Beneficios: </strong><%= obj.benefits %></p>' +
