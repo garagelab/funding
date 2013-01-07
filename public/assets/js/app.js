@@ -19,8 +19,9 @@ var App = function App() {
         self.ftClient = new FTClient('1vAIR_rP8fzPs_EYiaKEgXSq8yNa2Z1yV12SnOXI');
 
         self.ftClient.query({
-            select: ['provincias-en-las-que-actualmente-se-aplica-el-instrumento', 'beneficiarios', 'mecanismos', 'tema',
-                'titulo', 'detalle-y-cantidad-de-beneficiarios', 'objetivos', 'beneficios', 'monto', 'web', 'area', 'organismo', 'telefono']
+            select: ['provincias-en-las-que-actualmente-se-aplica-el-instrumento', 'beneficiarios', 'mecanismos',
+                'tema', 'titulo', 'detalle-y-cantidad-de-beneficiarios', 'objetivos', 'beneficios', 'monto', 'web',
+                'area', 'organismo', 'telefono', 'fecha-de-inicio', 'fecha-de-cierre']
         }, function(data) {
             data.table.rows.map(self.addItem, self);
             var item_template =
@@ -30,9 +31,16 @@ var App = function App() {
                     '<p><strong>Objetivos: </strong><%= obj.objectives %></p>' +
                     '<p><strong>Beneficios: </strong><%= obj.benefits %></p>' +
                     '<p><strong>Monto: </strong><%= obj.amount %></p>' +
-                    '<p><strong>Fechas: </strong> TODO: add</p>' +
+                    '<% if (obj.startDate || obj.endDate) { %>' +
+                    '<p><strong>Fechas: </strong>' +
+                    '<% if (obj.startDate) { %>desde el <%= obj.startDate %> <% } %><% if (obj.endDate) { %>desde el <%= obj.endDate %> <% } %>' +
+                    '</p><% } %>' +
                     '<p><strong>Web: </strong><a href="<%= obj.web %>" target="_blank"><%= obj.web %></a></p>' +
-                    '<p><strong>Contactos: </strong><%= obj.phone %> / <%= obj.area %> / <%= obj.entity %></p>'
+                    '<p><strong>Contactos: </strong>' +
+                    '<%= obj.phone %> ' +
+                    '<% if (obj.area != "Indefinido" && obj.area != "OTRA Secretaría") { %> / <%= obj.area %> <% } %>' +
+                    '<% if (obj.entity != "OTRO Ministerio") { %> / <%= obj.entity %> <% } %></p>' +
+                    '<hr/>' +
                     '</div>';
 
             $.facetelize({
@@ -72,7 +80,9 @@ var App = function App() {
             'web' : row[9],
             'area' : row[10],
             'entity' : row[11],
-            'phone' : row[12]
+            'phone' : row[12],
+            'startDate' : row[13],
+            'endDate' : row[14].substr(0,10)
         });
     }
 }
