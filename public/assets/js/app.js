@@ -49,7 +49,8 @@ var App = function App() {
                     'provinces' : 'Provincias',
                     'beneficiaries' : 'Beneficiarios',
                     'mecanisms' : 'Mecanismos',
-                    'topics' : 'Temas'
+                    'topics' : 'Temas',
+                    'entity' : 'Organismos'
                 },
                 resultSelector   : '#results',
                 facetSelector    : '#facets',
