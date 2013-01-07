@@ -4,10 +4,12 @@
 
 .facetsearch {
     display: inline-block;
-    width: 200px;
+    min-width: 185px;
+    max-width: 200px;
     vertical-align: top;
     margin-right: 25px;
     border-right: solid 1px #AAA;
+    padding-right: 20px;
 }
 .activeorderby,
 .activefacet {
