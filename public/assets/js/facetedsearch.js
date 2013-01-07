@@ -301,6 +301,12 @@
                 } else {
                     $("#"+filter.id).removeClass("activefacet");
                 }
+
+                if (filter.count > 0) {
+                    $("#"+filter.id).removeClass("disabledfacet");
+                } else {
+                    $("#"+filter.id).addClass("disabledfacet");
+                }
             });
         });
         countHtml = _.template(settings.countTemplate, {count: settings.currentResults.length});

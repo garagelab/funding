@@ -7,8 +7,13 @@
 }
 .activeorderby,
 .activefacet {
-    color: red;
+    color: #4682b4;
 }
+
+.disabledfacet {
+    color: #7e7b7f;
+}
+
 .bottomline {
     padding: 10px 0 10px 0;
     font-weight: bold;
@@ -25,6 +30,16 @@
 .bottomline .orderby-title {
     margin: 0 0 0 10px;
 }
+
+.deselectstartover {
+    cursor: pointer;
+    color: #4682b4;
+}
+
+.deselectstartover:hover {
+    text-decoration: underline;
+}
+
 .bottomline .deselectstartover {
     float: right;
 }
