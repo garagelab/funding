@@ -10,6 +10,7 @@
     margin-right: 25px;
     border-right: solid 1px #AAA;
     padding-right: 20px;
+    overflow-x: hidden;
 }
 .activeorderby,
 .activefacet {
