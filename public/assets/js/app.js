@@ -1,5 +1,4 @@
 $(function() {
-    console.log('init');        //TODO(gb): Remove trace!!!
     var app = new App();
     app.init();
 })
@@ -23,7 +22,7 @@ var App = function App() {
                 'tema', 'titulo', 'detalle-y-cantidad-de-beneficiarios', 'objetivos', 'beneficios', 'monto', 'web',
                 'area', 'organismo', 'telefono', 'fecha-de-inicio', 'fecha-de-cierre']
         }, function(data) {
-            data.table.rows.map(self.addItem, self);
+            data.rows.map(self.addItem, self);
             var item_template =
                 '<div class="item">' +
                     '<h3><%= obj.title %></h3>' +
