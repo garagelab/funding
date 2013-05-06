@@ -88,7 +88,6 @@ var App = function App() {
 
     this.addItem = function(row) {
         var self = this;
-        console.log(row);        //TODO(gb): Remove trace!!!
         this.items.push({
             'fondo': row[0],
             'provincias': row[1].trim().indexOf('Todo el país') == 0 ? self.allProvinces : row[1].trim().split(', '),
