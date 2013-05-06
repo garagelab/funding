@@ -1,5 +1,6 @@
 #facets {
     margin-top: 20px;
+    opacity: 0;
 }
 
 .facetsearch {
@@ -110,3 +111,43 @@ tt {
     background-color: #EEE;
     border: 1px solid #CCC;
 }
+
+.extrafacetlink {
+    display: inline-block;
+    /*min-width: 185px;*/
+    /*max-width: 200px;*/
+    vertical-align: bottom;
+    margin-right: 25px;
+    /*border-right: solid 1px #AAA;*/
+    padding-right: 20px;
+}
+
+.floatingFacet {
+    position: absolute;
+    z-index: 1000;
+    top: 305px;
+    left: 0;
+    background-color: #FFFFFF;
+    display: none;
+    border: solid 1px #cccccc;
+    padding: 10px;
+}
+
+#empresasFacets {
+    left: 62px;
+}
+
+#institucionesFacets {
+    left: 410px;
+}
+
+.closeFloatingFacet {
+    float: right;
+    text-decoration: none;
+}
+
+a.closeFloatingFacet:hover {
+    color: #000000;
+    font: bolder;
+}
+

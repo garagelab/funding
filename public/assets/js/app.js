@@ -65,12 +65,52 @@ var App = function App() {
                     '<hr/>' +
                     '</div>';
 
+            $('#facets').bind("facetuicreated", function() {
+                // Empresas
+                var empFacets = $("<div class='floatingFacet' id='empresasFacets'><a href='#' class='closeFloatingFacet'>&times;</a></div>");
+                empFacets.appendTo(this);
+                var empFacetLink = $("<div class='extrafacetlink'><a href='#'>Empresas</a></div>");
+                empFacetLink.click(function() {
+                    $('.floatingFacet[id!=empresasFacets]').hide();
+                    empFacets.toggle();
+                });
+                empFacetLink.insertAfter("#mecanismos");
+                $('#sector').appendTo(empFacets);
+                $('#fase_de_desarrollo').appendTo(empFacets);
+                $('#tipo_de_proyecto').appendTo(empFacets);
+
+                // Instituciones
+                var insFacets = $("<div class='floatingFacet' id='institucionesFacets'><a href='#' class='closeFloatingFacet'>&times;</a></div>");
+                insFacets.appendTo(this);
+                var insFacetLink = $("<div class='extrafacetlink'><a href='#'>Instituciones</a></div>");
+                insFacetLink.click(function() {
+                    $('.floatingFacet[id!=institucionesFacets]').hide();
+                    insFacets.toggle();
+                });
+                insFacetLink.insertAfter(".extrafacetlink");
+                $('#ins_etapas').appendTo(insFacets);
+                $('#ins_areas').appendTo(insFacets);
+
+                $('.closeFloatingFacet').click(function() { $(this).closest('.floatingFacet').toggle(); })
+
+                $(this).animate({opacity: 1});
+            });
+
             $.facetelize({
                 items            : self.items,
                 facets           : {
                     'provincias' : 'Provincias',
                     'beneficiarios' : 'Beneficiarios',
-                    'mecanismos' : 'Mecanismos'
+                    'mecanismos' : 'Mecanismos',
+
+                    // Empresas
+                    'sector' : 'Sector',
+                    'fase_de_desarrollo' : 'Fase de desarrollo',
+                    'tipo_de_proyecto' : 'Tipo de proyecto',
+
+                    // Instituciones
+                    'ins_etapas' : 'Etapas',
+                    'ins_areas' : 'Áreas'
                 },
                 resultSelector   : '#results',
                 facetSelector    : '#facets',
@@ -82,6 +122,8 @@ var App = function App() {
                 showMoreTemplate : '<a id=showmorebutton>Más resultados</a>',
                 noResults        : '<div class=results>No hay ningún resultado para esta búsqueda</div>'
             });
+
+
 
         })
     };
