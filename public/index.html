@@ -23,73 +23,55 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row" ng-show="debug">
-        <div class="span12">
-            <div class="well">
-                {{ filter | json }}
+<div class="row light">
+    <div class="container">
+        <div class="row" ng-show="debug">
+            <div class="span12">
+                <div class="well">
+                    {{ filter | json }}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="span4">
-            <div class="well well-small facet" ng-cloak>
-                <h6 class="pull-left">Beneficiarios</h6>
-                <a class="close" href="#" ng-click="resetBeneficiarios()">&times;</a>
-                <form class="form-search">
-                    <div class="input-append">
-                        <input type="text" class="span2 search-query" placeholder="Search">
-                        <button type="submit" class="btn"><span class="fui-search"></span></button>
+        <div class="row" style="padding-top: 16px">
+            <div class="span4">
+                <div class="well well-small facet" ng-cloak>
+                    <h6 class="pull-left"><strong>Beneficiarios</strong></h6>
+                    <a class="close" href="#" ng-click="resetBeneficiarios()">&times;</a>
+                    <form class="form-search">
+                        <div class="input-append">
+                            <input type="text" class="span2 search-query" placeholder="Search">
+                            <button type="submit" class="btn"><span class="fui-search"></span></button>
+                        </div>
+                    </form>
+                    <div class="scroll">
+                        <ul class="unstyled">
+                            <li class="facetitem" ng-repeat="beneficiario in beneficiarios" ng-click="toggleBeneficiarioChecked(beneficiario)">
+                                <a href="#" ng-class="{ checked: beneficiario.checked }">
+                                    {{ beneficiario.label }}
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </form>
-                <div class="scroll">
+                </div>
+            </div>
+            <div class="span4">
+                <div class="well well-small facet" ng-cloak>
+                    <h6 class="pull-left"><strong>Mecanismos</strong></h6>
+                    <a class="close" href="#" ng-click="resetMecanismos()">&times;</a>
+                    <form class="form-search">
+                        <div class="input-append">
+                            <input type="text" class="span2 search-query" placeholder="Search">
+                            <button type="submit" class="btn"><span class="fui-search"></span></button>
+                        </div>
+                    </form>
                     <ul class="unstyled">
-                        <li class="facetitem" ng-repeat="beneficiario in beneficiarios" ng-click="toggleBeneficiarioChecked(beneficiario)">
-                            <a href="#" ng-class="{ checked: beneficiario.checked }">
-                                {{ beneficiario.label }}
+                        <li class="facetitem" ng-repeat="mecanismo in mecanismos" ng-click="toggleMecanismoChecked(mecanismo)">
+                            <a href="#" ng-class="{ checked: mecanismo.checked }">
+                                {{ mecanismo.label }}
                             </a>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </div>
-        <div class="span4">
-            <div class="well well-small facet" ng-cloak>
-                <h6 class="pull-left">Mecanismos</h6>
-                <a class="close" href="#" ng-click="resetMecanismos()">&times;</a>
-                <form class="form-search">
-                    <div class="input-append">
-                        <input type="text" class="span2 search-query" placeholder="Search">
-                        <button type="submit" class="btn"><span class="fui-search"></span></button>
-                    </div>
-                </form>
-                <ul class="unstyled">
-                    <li class="facetitem" ng-repeat="mecanismo in mecanismos" ng-click="toggleMecanismoChecked(mecanismo)">
-                        <a href="#" ng-class="{ checked: mecanismo.checked }">
-                            {{ mecanismo.label }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="span4">
-            <div class="tabbable tabs-right">
-                <ul class="nav nav-tabs nav-append-content">
-                    <li class=""><a href="#empresas">Empresas</a></li>
-                    <li class=""><a href="#instituciones">Instituciones</a></li>
-
-                </ul> <!-- /tabs -->
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab4">
-                        <p>I'm in Section 1.</p>
-                    </div>
-                    <div class="tab-pane" id="empresas">
-                        <p>Empresas</p>
-                    </div>
-                    <div class="tab-pane" id="instituciones">
-                        <p>Instituciones</p>
-                    </div>
-                </div> <!-- /tab-content -->
             </div>
         </div>
     </div>
@@ -97,16 +79,27 @@
 <div class="row inverse fluid">
     <div class="container">
         <div class="span12">
-            <p>
-                Estas viendo
+            <p style="margin-top: 10px">
+                Estas viendo todos los instrumentos
+                <span ng-show="filter.beneficiarios.length > 0">cuyos beneficiarios sean <span class="filter-items">{{ filter.beneficiarios | join:'label':', ' }}</span></span>
+                <span ng-show="filter.beneficiarios.length > 0 && filter.mecanismos.length > 0"> y </span>
+                <span ng-show="filter.mecanismos.length > 0">cuyos mecanismos sean <span class="filter-items">{{ filter.mecanismos | join:'label':', ' }}</span></span>
+                .
             </p>
         </div>
     </div>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="span12">
+    <div class="row" style="padding-top: 16px">
+        <div class="span12" ng-show="funds.length > 0">
             <p class="pull-right" ng-cloak>Mostrando 1-{{ funds.length }} de {{ funds.length }} resultados</p>
+        </div>
+        <div class="span12" ng-show="funds.length == 0">
+            <div class="alert alert-info">
+                <h3>No se encontraron resutlados</h3>
+                <p>No se encontraron instrumentos con el criterio de filtro seleccionado. Pruebe limpiando el filtro y vuevla a comenzar.</p>
+                <a href="#" class="btn btn-info btn-wide" ng-click="resetFilter()">Limpiar todos los filtros</a>
+            </div>
         </div>
     </div>
     <div class="row">

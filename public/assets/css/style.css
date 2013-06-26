@@ -4,11 +4,16 @@
 }
 
 .fluid {
-    margin-bottom: 16px;
+    /*margin-bottom: 16px;*/
 }
 
 .facet {
     height: 250px;
+    background-color: #ffffff;
+}
+
+.light {
+    background-color: #ebedef;
 }
 
 .facet .close {
@@ -29,7 +34,11 @@
 }
 
 .facetitem a.checked {
-    color: #16a085;
+    color: #3498db;
+}
+
+.filter-items {
+    color: #3498db;
 }
 
 dt {

@@ -26,6 +26,12 @@ filters.filter('nonempty', [function() {
     }
 }])
 
+filters.filter('join', [function() {
+    return function(arr, prop, sep) {
+        return arr.map(function(elem) { return elem[prop] }).join(sep);
+    }
+}])
+
 // The controllers
 var controllers = angular.module('funding.controllers', ['funding.services']);
 
@@ -42,17 +48,21 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
     $scope.resetBeneficiarios = function() {
         Filter.beneficiarios = [];
-        $scope.beneficiarios.map(function(item) {
-            item.checked = false;
-        })
+        $scope.beneficiarios.map(function(item) { item.checked = false; })
         $scope.facet();
     }
 
     $scope.resetMecanismos = function() {
         Filter.mecanismos = [];
-        $scope.mecanismos.map(function(item) {
-            item.checked = false;
-        })
+        $scope.mecanismos.map(function(item) { item.checked = false; })
+        $scope.facet();
+    }
+
+    $scope.resetFilter = function() {
+        Filter.beneficiarios = [];
+        $scope.beneficiarios.map(function(item) { item.checked = false; })
+        Filter.mecanismos = [];
+        $scope.mecanismos.map(function(item) { item.checked = false; })
         $scope.facet();
     }
 
