@@ -37,18 +37,19 @@
                 <h6>Beneficiarios</h6>
                 <form class="form-search">
                     <div class="input-append">
-                        <input type="text" class="span2 search-query" placeholder="Search" id="search-query-1">
+                        <input type="text" class="span2 search-query" placeholder="Search">
                         <button type="submit" class="btn"><span class="fui-search"></span></button>
                     </div>
                 </form>
-                <ul class="unstyled">
-                    <li ng-repeat="beneficiario in beneficiarios">
-                        <label class="checkbox" for="checkbox1">
-                            <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
-                            {{ beneficiario.label }}
-                        </label>
-                    </li>
-                </ul>
+                <div class="scroll">
+                    <ul class="unstyled">
+                        <li class="facetitem" ng-repeat="beneficiario in beneficiarios" ng-click="toggleBeneficiarioChecked(beneficiario)">
+                            <a href="#" ng-class="{ checked: beneficiario.checked }">
+                                {{ beneficiario.label }} ({{ funds.length }})
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="span4">
@@ -56,13 +57,15 @@
                 <h6>Mecanismos</h6>
                 <form class="form-search">
                     <div class="input-append">
-                        <input type="text" class="span2 search-query" placeholder="Search" id="search-query-1">
+                        <input type="text" class="span2 search-query" placeholder="Search">
                         <button type="submit" class="btn"><span class="fui-search"></span></button>
                     </div>
                 </form>
                 <ul class="unstyled">
-                    <li ng-repeat="mecanismo in mecanismos">
-                        {{ mecanismo.label }}
+                    <li ng-repeat="mecanismo in mecanismos" ng-click="toggleBeneficiarioChecked(mecanismo)">
+                        <a href="#" class="facetitem" ng-class="{ checked: mecanismo.checked }">
+                            {{ mecanismo.label }} ({{ funds.length }})
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -189,8 +192,8 @@
 <!-- Load JS here for greater good =============================-->
 <script src="assets/js/angular.min.js"></script>
 <script src="assets/js/jquery-1.8.3.min.js"></script>
-<!--<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>-->
-<!--<script src="assets/js/jquery.ui.touch-punch.min.js"></script>-->
+<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <!--<script src="assets/js/bootstrap-select.js"></script>-->
 <!--<script src="assets/js/bootstrap-switch.js"></script>-->

@@ -24,16 +24,28 @@ var controllers = angular.module('funding.controllers', ['funding.services']);
 controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', function($scope, Filter, FTClient) {
     $scope.filter = Filter;
 
+    $scope.toggleBeneficiarioChecked = function(beneficiario) {
+        beneficiario.checked = !beneficiario.checked;
+
+        Filter.beneficiarios = $scope.beneficiarios.filter(function(item) {
+            return item.checked;
+        })
+    }
+
     // Beneficiarios
     FTClient.query({
         fields: ['beneficiarios'],
-        table: '1eb4iyrFgENme011jHDwM44P1KWUwxRfKrPAC5V8'
+        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
+        tail: 'GROUP BY beneficiarios'
     }, function(rows) {
         var beneficiarios = []
         rows.map(function(row) {
-            beneficiarios.push({
-                label: row[0]
-            })
+            if (row[0] != null) {
+                beneficiarios.push({
+                    label: row[0],
+                    checked: false
+                })
+            }
         })
         $scope.beneficiarios = beneficiarios;
         $scope.$apply();
@@ -42,13 +54,16 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
     // Mecanismos
     FTClient.query({
         fields: ['mecanismos'],
-        table: '1eb4iyrFgENme011jHDwM44P1KWUwxRfKrPAC5V8'
+        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
+        tail: 'GROUP BY mecanismos'
     }, function(rows) {
         var mecanismos = []
         rows.map(function(row) {
-            mecanismos.push({
-                label: row[0]
-            })
+            if (row[0] != "") {
+                mecanismos.push({
+                    label: row[0]
+                })
+            }
         })
         $scope.mecanismos = mecanismos;
         $scope.$apply();
@@ -57,7 +72,7 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
     $scope.query = function() {
         FTClient.query({
             fields: ['*'],
-            table: '1eb4iyrFgENme011jHDwM44P1KWUwxRfKrPAC5V8'
+            table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8'
         }, function(rows) {
             var funds = [];
             rows.map(function(row) {
@@ -79,7 +94,8 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
                     cobertura_maxima: row[15],
                     plazo_max: row[16],
                     detalle: row[17],
-                    url: row[18]
+                    url: row[18],
+                    instrumento: row[19]
                 })
             })
 

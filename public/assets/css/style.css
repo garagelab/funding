@@ -8,5 +8,22 @@
 }
 
 .facet {
-    min-height: 250px;
+    height: 250px;
+}
+
+.scroll {
+    height: 140px;
+    overflow-y: scroll;
+}
+
+.facetitem {
+    margin-bottom: 4px;
+}
+
+.facetitem a {
+    color: #34495e;
+}
+
+.facetitem a.checked {
+    color: #16a085;
 }
