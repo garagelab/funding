@@ -1,48 +1,38 @@
-var FTClient = function FTClient(tableId) {
+var FTClient = function(apiKey) {
 
-    this.tableId = tableId;
+    var ftClient = {
+        apiKey: apiKey
+    }
 
-    this._queryUrlHead = 'https://www.googleapis.com/fusiontables/v1/query?sql=';
-    this._queryUrlTail = '&key=AIzaSyCQRQld86JPSoZPcbN6NaRLxSqzEPf1e7c';
+    ftClient.query = function(query, success) {
 
-    this.query = function(queryObject, success, error) {
-        var self = this;
+        var url = this.getUrl(query);
 
-        error = error || function() { throw "AJAX error!"; }
-
+        console.log("Querying " + url + "...");
         $.ajax({
-            type: "GET",
-            url:  self.getQueryUrl(queryObject),
-            dataType: "jsonp",
-            success: success,
-            error: error
+            url: url,
+            dataType: 'jsonp',
+            success: function (data) {
+                var rows = data['rows'];
+                success.call(null, rows);
+            }
         });
     }
 
-    this.getQueryUrl = function(queryObject) {
-        var self = this;
-        var query = "";
+    ftClient.getUrl = function(query) {
+        var queryStr =
+            'SELECT ' + query.fields.join(',') + ' ' +
+                'FROM ' + query.table +
+                (query.tail ? ' ' + query.tail : '');
 
-        if (queryObject.select) {
-            query += "SELECT '" + queryObject.select.join("','") + "' FROM " + self.tableId;
-        }
 
-        if (queryObject.where) {
-            query += " WHERE " + queryObject.where;
-        }
+        var url = ['https://www.googleapis.com/fusiontables/v1/query'];
+        url.push('?sql=' + encodeURIComponent(queryStr));
+        url.push('&key=' + this.apiKey);
+        url.push('&callback=?');
 
-        if (queryObject.orderBy) {
-            query += " ORDER BY " + queryObject.orderBy;
-        }
-
-        if (queryObject.offset != null && queryObject.offset != undefined) {
-            query += " OFFSET " + queryObject.offset;
-        }
-
-        if (queryObject.limit) {
-            query += " LIMIT " + queryObject.limit;
-        }
-
-        return encodeURI(self._queryUrlHead + query + self._queryUrlTail);
+        return url.join('');
     }
+
+    return ftClient;
 }

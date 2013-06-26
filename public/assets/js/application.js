@@ -1,171 +1,93 @@
-// Some general UI pack related JS
-// Extend JS String with repeat method
-String.prototype.repeat = function(num) {
-  return new Array(num + 1).join(this);
-};
+'use strict'
 
-(function($) {
+// The app
+var app = angular.module('funding', ['funding.services', 'funding.controllers']);
 
-  // Add segments to a slider
-  $.fn.addSliderSegments = function (amount) {
-    return this.each(function () {
-      var segmentGap = 100 / (amount - 1) + "%"
-        , segment = "<div class='ui-slider-segment' style='margin-left: " + segmentGap + ";'></div>";
-      $(this).prepend(segment.repeat(amount - 2));
-    });
-  };
+// The services
+var services = angular.module('funding.services', []);
 
-  $(function() {
+services.service('FTClient', [function() {
+    return new FTClient('AIzaSyCQRQld86JPSoZPcbN6NaRLxSqzEPf1e7c');
+}])
 
-    // Custom Selects
-    $("select[name='huge']").selectpicker({style: 'btn-huge btn-primary', menuStyle: 'dropdown-inverse'});
-    $("select[name='large']").selectpicker({style: 'btn-large btn-danger'});
-    $("select[name='info']").selectpicker({style: 'btn-info'});
-    $("select[name='small']").selectpicker({style: 'btn-small btn-warning'});
+services.service('Filter', ['FTClient', function(FTClient) {
+    return {
+        beneficiarios: [],
+        mecanismos: []
+    }
+}])
 
-    // Tabs
-    $(".nav-tabs a").on('click', function (e) {
-      e.preventDefault();
-      $(this).tab("show");
+// The controllers
+var controllers = angular.module('funding.controllers', ['funding.services']);
+
+// Result Controller
+controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', function($scope, Filter, FTClient) {
+    $scope.filter = Filter;
+
+    // Beneficiarios
+    FTClient.query({
+        fields: ['beneficiarios'],
+        table: '1eb4iyrFgENme011jHDwM44P1KWUwxRfKrPAC5V8'
+    }, function(rows) {
+        var beneficiarios = []
+        rows.map(function(row) {
+            beneficiarios.push({
+                label: row[0]
+            })
+        })
+        $scope.beneficiarios = beneficiarios;
+        $scope.$apply();
     })
 
-    // Tooltips
-    $("[data-toggle=tooltip]").tooltip("show");
+    // Mecanismos
+    FTClient.query({
+        fields: ['mecanismos'],
+        table: '1eb4iyrFgENme011jHDwM44P1KWUwxRfKrPAC5V8'
+    }, function(rows) {
+        var mecanismos = []
+        rows.map(function(row) {
+            mecanismos.push({
+                label: row[0]
+            })
+        })
+        $scope.mecanismos = mecanismos;
+        $scope.$apply();
+    })
 
-    // Tags Input
-    $(".tagsinput").tagsInput();
+    $scope.query = function() {
+        FTClient.query({
+            fields: ['*'],
+            table: '1eb4iyrFgENme011jHDwM44P1KWUwxRfKrPAC5V8'
+        }, function(rows) {
+            var funds = [];
+            rows.map(function(row) {
+                funds.push({
+                    fondo: row[0],
+                    beneficiarios: row[2],
+                    mecanismos: row[3],
+                    sector: row[4],
+                    fase_de_desarrollo: row[5],
+                    tipo_de_proyecto: row[6],
+                    ins_etapas: row[7],
+                    ins_areas: row[8],
+                    tipo_de_convocatoria: row[9],
+                    beneficiarios_descripcion: row[10],
+                    beneficiarios_tipo: row[11],
+                    objetivos: row[12],
+                    tipo_de_financiamiento: row[13],
+                    monto_maximo: row[14],
+                    cobertura_maxima: row[15],
+                    plazo_max: row[16],
+                    detalle: row[17],
+                    url: row[18]
+                })
+            })
 
-    // jQuery UI Sliders
-    var $slider = $("#slider");
-    if ($slider.length > 0) {
-      $slider.slider({
-        min: 1,
-        max: 5,
-        value: 3,
-        orientation: "horizontal",
-        range: "min"
-      }).addSliderSegments($slider.slider("option").max);
+            $scope.funds = funds;
+            $scope.$apply();
+        })
     }
 
-    var $slider2 = $("#slider2");
-    if ($slider2.length > 0) {
-      $slider2.slider({
-        min: 1,
-        max: 5,
-        values: [3, 4],
-        orientation: "horizontal",
-        range: true
-      }).addSliderSegments($slider2.slider("option").max);
-    }
-
-    var $slider3 = $("#slider3")
-      , slider3ValueMultiplier = 100
-      , slider3Options;
-    if ($slider3.length > 0) {
-      $slider3.slider({
-        min: 1,
-        max: 5,
-        values: [3, 4],
-        orientation: "horizontal",
-        range: true,
-        slide: function(event, ui) {
-          $slider3.find(".ui-slider-value:first").text("$" + ui.values[0] * slider3ValueMultiplier).end()
-        .find(".ui-slider-value:last").text("$" + ui.values[1] * slider3ValueMultiplier);
-        }
-      });
-      slider3Options = $slider3.slider("option");
-      $slider3.addSliderSegments(slider3Options.max).find(".ui-slider-value:first").text("$" + slider3Options.values[0] * slider3ValueMultiplier).end()
-        .find(".ui-slider-value:last").text("$" + slider3Options.values[1] * slider3ValueMultiplier);
-    }
-
-    // Add style class name to a tooltips
-    $(".tooltip").addClass(function() {
-      if ($(this).prev().attr("data-tooltip-style")) {
-        return "tooltip-" + $(this).prev().attr("data-tooltip-style");
-      }
-    });
-
-    // Placeholders for input/textarea
-    $("input, textarea").placeholder();
-
-    // Make pagination demo work
-    $(".pagination a").on('click', function() {
-      $(this).parent().siblings("li").removeClass("active").end().addClass("active");
-    });
-
-    $(".btn-group a").on('click', function() {
-      $(this).siblings().removeClass("active").end().addClass("active");
-    });
-
-    // Disable link clicks to prevent page scrolling
-    $('a[href="#fakelink"]').on('click', function (e) {
-      e.preventDefault();
-    });
-
-    // jQuery UI Spinner
-    $.widget( "ui.customspinner", $.ui.spinner, {
-      _buttonHtml: function() { // Remove arrows on the buttons
-        return "" +
-        "<a class='ui-spinner-button ui-spinner-up ui-corner-tr'>" +
-          "<span class='ui-icon " + this.options.icons.up + "'></span>" +
-        "</a>" +
-        "<a class='ui-spinner-button ui-spinner-down ui-corner-br'>" +
-          "<span class='ui-icon " + this.options.icons.down + "'></span>" +
-        "</a>";
-      }
-    });
-
-    $('#spinner-01').customspinner({
-      min: -99,
-      max: 99
-    }).on('focus', function () {
-      $(this).closest('.ui-spinner').addClass('focus');
-    }).on('blur', function () {
-      $(this).closest('.ui-spinner').removeClass('focus');
-    });
-
-
-    // Focus state for append/prepend inputs
-    $('.input-prepend, .input-append').on('focus', 'input', function () {
-      $(this).closest('.control-group, form').addClass('focus');
-    }).on('blur', 'input', function () {
-      $(this).closest('.control-group, form').removeClass('focus');
-    });
-
-    // Table: Toggle all checkboxes
-    $('.table .toggle-all').on('click', function() {
-      var ch = $(this).find(':checkbox').prop('checked');
-      $(this).closest('.table').find('tbody :checkbox').checkbox(!ch ? 'check' : 'uncheck');
-    });
-
-    // Table: Add class row selected
-    $('.table tbody :checkbox').on('check uncheck toggle', function (e) {
-      var $this = $(this)
-        , check = $this.prop('checked')
-        , toggle = e.type == 'toggle'
-        , checkboxes = $('.table tbody :checkbox')
-        , checkAll = checkboxes.length == checkboxes.filter(':checked').length
-
-      $this.closest('tr')[check ? 'addClass' : 'removeClass']('selected-row');
-      if (toggle) $this.closest('.table').find('.toggle-all :checkbox').checkbox(checkAll ? 'check' : 'uncheck');
-    });
-
-    // jQuery UI Datepicker
-    $('#datepicker-01').datepicker({
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      dateFormat: "d MM, yy",
-      yearRange: '-1:+1'
-    }).prev('.btn').on('click', function (e) {
-      e && e.preventDefault();
-      $('#datepicker-01').focus();
-    });
-    $.extend($.datepicker, {_checkOffset:function(inst,offset,isFixed){return offset}});
-
-    // Switch
-    $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
-
-    // Stackable tables
-    $(".table-striped").stacktable({id: "rwd-table"});
-  });
-})(jQuery);
+    // init
+    $scope.query();
+}])

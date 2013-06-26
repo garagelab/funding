@@ -6,35 +6,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Loading Flat UI -->
-    <link href="/assets/css/flat-ui.css" rel="stylesheet">
+    <link href="assets/css/flat-ui.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="/assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
-<body>
-<h1>Instrumentos para el desarrollo productivo</h1>
-<div id=facets></div>
-<div id=results></div>
+<body ng-app="funding" ng-controller="AppController">
+<div class="row inverse fluid">
+    <div class="container">
+        <div class="span12">
+            <h3>Intrumentos para el desarrollo productivo</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                {{ filter | json }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span4">
+            <div class="well well-small facet">
+                <h6>Beneficiarios</h6>
+                <form class="form-search">
+                    <div class="input-append">
+                        <input type="text" class="span2 search-query" placeholder="Search" id="search-query-1">
+                        <button type="submit" class="btn"><span class="fui-search"></span></button>
+                    </div>
+                </form>
+                <ul class="unstyled">
+                    <li ng-repeat="beneficiario in beneficiarios">
+                        <label class="checkbox" for="checkbox1">
+                            <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
+                            {{ beneficiario.label }}
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well well-small facet">
+                <h6>Mecanismos</h6>
+                <form class="form-search">
+                    <div class="input-append">
+                        <input type="text" class="span2 search-query" placeholder="Search" id="search-query-1">
+                        <button type="submit" class="btn"><span class="fui-search"></span></button>
+                    </div>
+                </form>
+                <ul class="unstyled">
+                    <li ng-repeat="mecanismo in mecanismos">
+                        {{ mecanismo.label }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="tabbable tabs-right">
+                <ul class="nav nav-tabs nav-append-content">
+                    <li class=""><a href="#empresas">Empresas</a></li>
+                    <li class=""><a href="#instituciones">Instituciones</a></li>
+
+                </ul> <!-- /tabs -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab4">
+                        <p>I'm in Section 1.</p>
+                    </div>
+                    <div class="tab-pane" id="empresas">
+                        <p>Empresas</p>
+                    </div>
+                    <div class="tab-pane" id="instituciones">
+                        <p>Instituciones</p>
+                    </div>
+                </div> <!-- /tab-content -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row inverse fluid">
+    <div class="container">
+        <div class="span12">
+            <p>Estas viendo</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <ul class="unstyled">
+                <li ng-repeat="fund in funds">
+                    <div class="alert alert-info" ng-cloak>
+                        <h6>{{ fund.fondo }}</h6>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-menu bottom-menu-large mbl">
+    <div class="container">
+        <div class="row">
+            <div class="span2 brand">
+                <a href="#fakelink">Instrumentos para el Desarrollo Productivo</a>
+            </div>
+
+            <div class="span2">
+                <h5 class="title">About Us</h5>
+                <ul class="bottom-links">
+                    <li><a href="#fakelink">Dashboard</a></li>
+                    <li><a href="#fakelink">Feed</a></li>
+                    <li><a href="#fakelink">Forums</a></li>
+                    <li><a href="#fakelink">Radio</a></li>
+                    <li><a href="#fakelink">Journal</a></li>
+                    <li><a href="#fakelink">Reader</a></li>
+                    <li><a href="#fakelink">Store</a></li>
+                </ul>
+            </div>
+
+            <div class="span2">
+                <h5 class="title">Categories</h5>
+                <ul class="bottom-links">
+                    <li><a href="#fakelink">Design</a></li>
+                    <li><a href="#fakelink">Freebies</a></li>
+                    <li><a href="#fakelink">Tutorials</a></li>
+                    <li><a href="#fakelink">Coding</a></li>
+                    <li><a href="#fakelink">Inspiration</a></li>
+                    <li><a href="#fakelink">WordPress</a></li>
+                    <li><a href="#fakelink">Resources</a></li>
+                </ul>
+            </div>
+
+            <div class="span2">
+                <h5 class="title">Networks</h5>
+                <ul class="bottom-links">
+                    <li><a href="#fakelink">Insight</a></li>
+                    <li><a href="#fakelink">Promotion</a></li>
+                    <li><a href="#fakelink">Production</a></li>
+                    <li><a href="#fakelink">Planning</a></li>
+                    <li><a href="#fakelink">Journal</a></li>
+                    <li><a href="#fakelink">Reader</a></li>
+                    <li><a href="#fakelink">Store</a></li>
+                </ul>
+            </div>
+
+            <div class="span2">
+                <h5 class="title">Mainframe</h5>
+                <ul class="bottom-links">
+                    <li><a href="#fakelink">Register / Login</a></li>
+                    <li class="active"><a href="#fakelink">Jobs</a></li>
+                    <li><a href="#fakelink">Contacts</a></li>
+                    <li><a href="#fakelink">Privacy</a></li>
+                    <li><a href="#fakelink">Terms of Use</a></li>
+                </ul>
+            </div>
+
+            <div class="span2">
+                <h5 class="title">Follow Us</h5>
+                <ul class="bottom-links">
+                    <li><a href="#fakelink">Facebook</a></li>
+                    <li><a href="#fakelink">Twitter</a></li>
+                    <li><a href="#fakelink">Youtube</a></li>
+                    <li><a href="#fakelink">Vimeo</a></li>
+                    <li><a href="#fakelink">Instagram</a></li>
+                    <li><a href="#fakelink">Vine <span class="label label-small label-primary">New</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div id=facets></div>-->
+<!--<div id=results></div>-->
+
 <!-- Load JS here for greater good =============================-->
-<script src="/assets/js/jquery-1.8.3.min.js"></script>
-<script src="/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
-<script src="/assets/js/jquery.ui.touch-punch.min.js"></script>
-<script src="/assets/js/bootstrap.min.js"></script>
-<script src="/assets/js/bootstrap-select.js"></script>
-<script src="/assets/js/bootstrap-switch.js"></script>
-<script src="/assets/js/flatui-checkbox.js"></script>
-<script src="/assets/js/flatui-radio.js"></script>
-<script src="/assets/js/jquery.tagsinput.js"></script>
-<script src="/assets/js/jquery.placeholder.js"></script>
-<script src="/assets/js/jquery.stacktable.js"></script>
-<script type="text/javascript" src="/assets/js/underscore-1.1.7.js"></script>
-<script type="text/javascript" src="/assets/js/facetedsearch.js"></script>
-<script type="text/javascript" src="/assets/js/FTClient.js"></script>
-<script type="text/javascript" src="/assets/js/app.js"></script>
+<script src="assets/js/angular.min.js"></script>
+<script src="assets/js/jquery-1.8.3.min.js"></script>
+<!--<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>-->
+<!--<script src="assets/js/jquery.ui.touch-punch.min.js"></script>-->
+<script src="assets/js/bootstrap.min.js"></script>
+<!--<script src="assets/js/bootstrap-select.js"></script>-->
+<!--<script src="assets/js/bootstrap-switch.js"></script>-->
+<script src="assets/js/flatui-checkbox.js"></script>
+<!--<script src="assets/js/flatui-radio.js"></script>-->
+<!--<script src="assets/js/jquery.tagsinput.js"></script>-->
+<!--<script src="assets/js/jquery.placeholder.js"></script>-->
+<!--<script src="assets/js/jquery.stacktable.js"></script>-->
+<script type="text/javascript" src="assets/js/FTClient.js"></script>
+<script type="text/javascript" src="assets/js/application.js"></script>
+
+<script>
+    $(function() {
+        // Tabs
+        $(".nav-tabs a").on('click', function (e) {
+            e.preventDefault();
+            $(this).tab("show");
+        })
+
+        // Focus state for append/prepend inputs
+        $('.input-prepend, .input-append').on('focus', 'input', function () {
+            $(this).closest('.control-group, form').addClass('focus');
+        }).on('blur', 'input', function () {
+                    $(this).closest('.control-group, form').removeClass('focus');
+                });
+    })
+</script>
 
 </body>
 </html>

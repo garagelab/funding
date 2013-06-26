@@ -97,7 +97,7 @@ var App = function App() {
             $.facetelize({
                 items            : self.items,
                 facets           : {
-                    'provincias' : 'Provincias',
+//                    'provincias' : 'Provincias',
                     'beneficiarios' : 'Beneficiarios',
                     'mecanismos' : 'Mecanismos',
 
@@ -115,6 +115,7 @@ var App = function App() {
                 resultTemplate   : item_template,
                 paginationCount  : 10,
                 orderByTemplate  : '',
+                facetContainer   : '<div class="facetsearch span4" id=<%= id %> ></div>',
                 countTemplate    : '<div class=facettotalcount><%= count %> resultados</div>',
                 deselectTemplate : '<div class=deselectstartover>Limpiar filtro</div>',
                 showMoreTemplate : '<a id=showmorebutton>Más resultados</a>',
