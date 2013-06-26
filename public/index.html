@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="row">
+    <div class="row" ng-show="debug">
         <div class="span12">
             <div class="well">
                 {{ filter | json }}
@@ -33,8 +33,9 @@
     </div>
     <div class="row">
         <div class="span4">
-            <div class="well well-small facet">
-                <h6>Beneficiarios</h6>
+            <div class="well well-small facet" ng-cloak>
+                <h6 class="pull-left">Beneficiarios</h6>
+                <a class="close" href="#" ng-click="resetBeneficiarios()">&times;</a>
                 <form class="form-search">
                     <div class="input-append">
                         <input type="text" class="span2 search-query" placeholder="Search">
@@ -45,7 +46,7 @@
                     <ul class="unstyled">
                         <li class="facetitem" ng-repeat="beneficiario in beneficiarios" ng-click="toggleBeneficiarioChecked(beneficiario)">
                             <a href="#" ng-class="{ checked: beneficiario.checked }">
-                                {{ beneficiario.label }} ({{ funds.length }})
+                                {{ beneficiario.label }}
                             </a>
                         </li>
                     </ul>
@@ -53,8 +54,9 @@
             </div>
         </div>
         <div class="span4">
-            <div class="well well-small facet">
-                <h6>Mecanismos</h6>
+            <div class="well well-small facet" ng-cloak>
+                <h6 class="pull-left">Mecanismos</h6>
+                <a class="close" href="#" ng-click="resetMecanismos()">&times;</a>
                 <form class="form-search">
                     <div class="input-append">
                         <input type="text" class="span2 search-query" placeholder="Search">
@@ -62,9 +64,9 @@
                     </div>
                 </form>
                 <ul class="unstyled">
-                    <li ng-repeat="mecanismo in mecanismos" ng-click="toggleBeneficiarioChecked(mecanismo)">
-                        <a href="#" class="facetitem" ng-class="{ checked: mecanismo.checked }">
-                            {{ mecanismo.label }} ({{ funds.length }})
+                    <li class="facetitem" ng-repeat="mecanismo in mecanismos" ng-click="toggleMecanismoChecked(mecanismo)">
+                        <a href="#" ng-class="{ checked: mecanismo.checked }">
+                            {{ mecanismo.label }}
                         </a>
                     </li>
                 </ul>
@@ -95,17 +97,54 @@
 <div class="row inverse fluid">
     <div class="container">
         <div class="span12">
-            <p>Estas viendo</p>
+            <p>
+                Estas viendo
+            </p>
         </div>
     </div>
 </div>
 <div class="container">
     <div class="row">
         <div class="span12">
+            <p class="pull-right" ng-cloak>Mostrando 1-{{ funds.length }} de {{ funds.length }} resultados</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
             <ul class="unstyled">
                 <li ng-repeat="fund in funds">
                     <div class="alert alert-info" ng-cloak>
-                        <h6>{{ fund.fondo }}</h6>
+                        <small>{{ fund.fondo }}</small>
+                        <h6>{{ fund.instrumento }}</h6>
+                        <p ng-show="fund.detalle">{{ fund.detalle }}</p>
+                        <dl>
+                            <dt>Beneficiarios:</dt>
+                            <dd>{{ fund.beneficiarios | nonempty }}</dd>
+                            <dt>Descripción de beneficiarios</dt>
+                            <dd>{{ fund.beneficiarios_descripcion }}</dd>
+                            <dt>Tipo de beneficiarios</dt>
+                            <dd>{{ fund.beneficiarios_tipo }}</dd>
+                            <dt>Mecanismos:</dt>
+                            <dd>{{ fund.mecanismos | nonempty }}</dd>
+                            <dt>Sector:</dt>
+                            <dd>{{ fund.sector | nonempty }}</dd>
+                            <dt>Fase de desarrollo:</dt>
+                            <dd>{{ fund.fase_de_desarrollo | nonempty }}</dd>
+                            <dt>Tipo de proyecto:</dt>
+                            <dd>{{ fund.tipo_de_proyecto | nonempty }}</dd>
+                            <dt>Tipo de convocatoria:</dt>
+                            <dd>{{ fund.tipo_de_convocatoria | nonempty }}</dd>
+                            <dt>Objetivos:</dt>
+                            <dd>{{ fund.objetivos }}</dd>
+                            <dt>Tipo de financiamiento:</dt>
+                            <dd>{{ fund.tipo_de_financiamiento }}</dd>
+                            <dt>Monto máximo:</dt>
+                            <dd>{{ fund.monto_maximo }}</dd>
+                            <dt>Plazo máximo</dt>
+                            <dd>{{ fund.plazo_max }}</dd>
+                            <dt>Site:</dt>
+                            <dd><a href="{{ fund.url }}" target="_blank">{{ fund.url }}</a></dd>
+                        </dl>
                     </div>
                 </li>
             </ul>
@@ -118,68 +157,6 @@
         <div class="row">
             <div class="span2 brand">
                 <a href="#fakelink">Instrumentos para el Desarrollo Productivo</a>
-            </div>
-
-            <div class="span2">
-                <h5 class="title">About Us</h5>
-                <ul class="bottom-links">
-                    <li><a href="#fakelink">Dashboard</a></li>
-                    <li><a href="#fakelink">Feed</a></li>
-                    <li><a href="#fakelink">Forums</a></li>
-                    <li><a href="#fakelink">Radio</a></li>
-                    <li><a href="#fakelink">Journal</a></li>
-                    <li><a href="#fakelink">Reader</a></li>
-                    <li><a href="#fakelink">Store</a></li>
-                </ul>
-            </div>
-
-            <div class="span2">
-                <h5 class="title">Categories</h5>
-                <ul class="bottom-links">
-                    <li><a href="#fakelink">Design</a></li>
-                    <li><a href="#fakelink">Freebies</a></li>
-                    <li><a href="#fakelink">Tutorials</a></li>
-                    <li><a href="#fakelink">Coding</a></li>
-                    <li><a href="#fakelink">Inspiration</a></li>
-                    <li><a href="#fakelink">WordPress</a></li>
-                    <li><a href="#fakelink">Resources</a></li>
-                </ul>
-            </div>
-
-            <div class="span2">
-                <h5 class="title">Networks</h5>
-                <ul class="bottom-links">
-                    <li><a href="#fakelink">Insight</a></li>
-                    <li><a href="#fakelink">Promotion</a></li>
-                    <li><a href="#fakelink">Production</a></li>
-                    <li><a href="#fakelink">Planning</a></li>
-                    <li><a href="#fakelink">Journal</a></li>
-                    <li><a href="#fakelink">Reader</a></li>
-                    <li><a href="#fakelink">Store</a></li>
-                </ul>
-            </div>
-
-            <div class="span2">
-                <h5 class="title">Mainframe</h5>
-                <ul class="bottom-links">
-                    <li><a href="#fakelink">Register / Login</a></li>
-                    <li class="active"><a href="#fakelink">Jobs</a></li>
-                    <li><a href="#fakelink">Contacts</a></li>
-                    <li><a href="#fakelink">Privacy</a></li>
-                    <li><a href="#fakelink">Terms of Use</a></li>
-                </ul>
-            </div>
-
-            <div class="span2">
-                <h5 class="title">Follow Us</h5>
-                <ul class="bottom-links">
-                    <li><a href="#fakelink">Facebook</a></li>
-                    <li><a href="#fakelink">Twitter</a></li>
-                    <li><a href="#fakelink">Youtube</a></li>
-                    <li><a href="#fakelink">Vimeo</a></li>
-                    <li><a href="#fakelink">Instagram</a></li>
-                    <li><a href="#fakelink">Vine <span class="label label-small label-primary">New</span></a></li>
-                </ul>
             </div>
         </div>
     </div>

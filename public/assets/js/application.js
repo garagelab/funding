@@ -1,7 +1,7 @@
 'use strict'
 
 // The app
-var app = angular.module('funding', ['funding.services', 'funding.controllers']);
+var app = angular.module('funding', ['funding.services', 'funding.controllers', 'funding.filters']);
 
 // The services
 var services = angular.module('funding.services', []);
@@ -17,18 +17,66 @@ services.service('Filter', ['FTClient', function(FTClient) {
     }
 }])
 
+// The filters
+var filters = angular.module('funding.filters', []);
+
+filters.filter('nonempty', [function() {
+    return function(str) {
+        return str == "" ? "-" : str;
+    }
+}])
+
 // The controllers
 var controllers = angular.module('funding.controllers', ['funding.services']);
 
 // Result Controller
 controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', function($scope, Filter, FTClient) {
     $scope.filter = Filter;
+    $scope.debug = false;
 
     $scope.toggleBeneficiarioChecked = function(beneficiario) {
         beneficiario.checked = !beneficiario.checked;
+        Filter.beneficiarios = $scope.beneficiarios.filter(function(item) { return item.checked; })
+        $scope.facet();
+    }
 
-        Filter.beneficiarios = $scope.beneficiarios.filter(function(item) {
-            return item.checked;
+    $scope.resetBeneficiarios = function() {
+        Filter.beneficiarios = [];
+        $scope.beneficiarios.map(function(item) {
+            item.checked = false;
+        })
+        $scope.facet();
+    }
+
+    $scope.resetMecanismos = function() {
+        Filter.mecanismos = [];
+        $scope.mecanismos.map(function(item) {
+            item.checked = false;
+        })
+        $scope.facet();
+    }
+
+    $scope.toggleMecanismoChecked = function(mecanismo) {
+        mecanismo.checked = !mecanismo.checked;
+        Filter.mecanismos = $scope.mecanismos.filter(function(item) { return item.checked; })
+        $scope.facet();
+    }
+
+    $scope.facet = function() {
+        var beneficiarios = {};
+        Filter.beneficiarios.map(function(item) { beneficiarios[item.label] = 1; })
+        var mecanismos = {};
+        Filter.mecanismos.map(function(item) { mecanismos[item.label] = 1; })
+
+        $scope.funds = $scope.results.filter(function(fund) {
+            var retain = true;
+            if (Filter.beneficiarios.length > 0) {
+                retain = retain && fund.beneficiarios in beneficiarios;
+            }
+            if (Filter.mecanismos.length > 0) {
+                retain = retain && fund.mecanismos in mecanismos;
+            }
+            return retain;
         })
     }
 
@@ -69,7 +117,7 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
         $scope.$apply();
     })
 
-    $scope.query = function() {
+    $scope.fetch = function() {
         FTClient.query({
             fields: ['*'],
             table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8'
@@ -78,32 +126,33 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
             rows.map(function(row) {
                 funds.push({
                     fondo: row[0],
+                    provincias_de_aplicacion: row[1],
                     beneficiarios: row[2],
                     mecanismos: row[3],
                     sector: row[4],
                     fase_de_desarrollo: row[5],
                     tipo_de_proyecto: row[6],
-                    ins_etapas: row[7],
-                    ins_areas: row[8],
-                    tipo_de_convocatoria: row[9],
-                    beneficiarios_descripcion: row[10],
-                    beneficiarios_tipo: row[11],
-                    objetivos: row[12],
-                    tipo_de_financiamiento: row[13],
-                    monto_maximo: row[14],
-                    cobertura_maxima: row[15],
-                    plazo_max: row[16],
-                    detalle: row[17],
-                    url: row[18],
-                    instrumento: row[19]
+                    tipo_de_convocatoria: row[7],
+                    beneficiarios_descripcion: row[8],
+                    beneficiarios_tipo: row[9],
+                    objetivos: row[10],
+                    tipo_de_financiamiento: row[11],
+                    monto_maximo: row[12],
+                    cobertura_maxima: row[13],
+                    plazo_max: row[14],
+                    detalle: row[15] == "" ? null : row[15],
+                    url: row[16],
+                    instrumento: row[17]
                 })
             })
 
             $scope.funds = funds;
+            $scope.results = funds;
+            console.log(funds);        //TODO(gb): Remove trace!!!
             $scope.$apply();
         })
     }
 
     // init
-    $scope.query();
+    $scope.fetch();
 }])
