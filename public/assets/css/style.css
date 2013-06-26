@@ -45,3 +45,17 @@ dt {
     float: left;
     margin-right: 4px;
 }
+
+.search-query {
+    width: 100%;
+}
+
+.form-search.focus input {
+    border-color: #3498db;
+}
+
+.form-search.focus .btn {
+    border-color: #3498db;
+    color: #3498db;
+}
+

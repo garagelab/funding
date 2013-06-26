@@ -33,13 +33,16 @@
             </div>
         </div>
         <div class="row" style="padding-top: 16px">
+            <div class="span12">
+                <p>Utilice los controles para filtrar los resultados y econtrar el instrumento que necesita:</p>
+            </div>
             <div class="span4">
                 <div class="well well-small facet" ng-cloak>
                     <h6 class="pull-left"><strong>Beneficiarios</strong></h6>
                     <a class="close" href="#" ng-click="resetBeneficiarios()">&times;</a>
                     <form class="form-search">
                         <div class="input-append">
-                            <input type="text" class="span2 search-query" placeholder="Search">
+                            <input type="text" class="search-query" placeholder="Buscar beneficiarios">
                             <button type="submit" class="btn"><span class="fui-search"></span></button>
                         </div>
                     </form>
@@ -60,7 +63,7 @@
                     <a class="close" href="#" ng-click="resetMecanismos()">&times;</a>
                     <form class="form-search">
                         <div class="input-append">
-                            <input type="text" class="span2 search-query" placeholder="Search">
+                            <input type="text" class="search-query" placeholder="Buscar mecanismos">
                             <button type="submit" class="btn"><span class="fui-search"></span></button>
                         </div>
                     </form>
@@ -89,7 +92,7 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container" style="min-height: 500px">
     <div class="row" style="padding-top: 16px">
         <div class="span12" ng-show="funds.length > 0">
             <p class="pull-right" ng-cloak>Mostrando 1-{{ funds.length }} de {{ funds.length }} resultados</p>
