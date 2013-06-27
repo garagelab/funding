@@ -73,3 +73,16 @@ dt {
     margin: 10px 0;
 }
 
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover {
+    background-color: #2970a3;
+}
+
+.nav-pills > li > a {
+    background-color: #3498db;
+    border-left: 2px solid #2970a3;
+}
+
+.nav-pills > li > a:hover {
+    background-color: #36adf3;
+}
+

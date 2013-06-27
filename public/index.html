@@ -39,7 +39,7 @@
                     <table style="width: 100%">
                         <tr>
                             <td><h6><strong>Beneficiarios</strong></h6></td>
-                            <td><a href="#" class="reset-filter pull-right" ng-click="resetBeneficiarios()"><small>Limpiar</small></a></td>
+                            <td><a href="#" class="reset-filter pull-right" ng-click="resetBeneficiarios()" prevent-click><small>Limpiar</small></a></td>
                         </tr>
                     </table>
 
@@ -52,7 +52,7 @@
                     <div class="scroll">
                         <ul class="unstyled">
                             <li class="facetitem" ng-repeat="beneficiario in beneficiarios" ng-click="toggleBeneficiarioChecked(beneficiario)">
-                                <a href="#" ng-class="{ checked: beneficiario.checked }">
+                                <a href="#" ng-class="{ checked: beneficiario.checked }" prevent-click>
                                     {{ beneficiario.label }}
                                 </a>
                             </li>
@@ -65,7 +65,7 @@
                     <table style="width: 100%">
                         <tr>
                             <td><h6><strong>Mecanismos</strong></h6></td>
-                            <td><a href="#" class="reset-filter pull-right" ng-click="resetMecanismos()"><small>Limpiar</small></a></td>
+                            <td><a href="#" class="reset-filter pull-right" ng-click="resetMecanismos()" prevent-click><small>Limpiar</small></a></td>
                         </tr>
                     </table>
                     <form class="form-search">
@@ -76,7 +76,7 @@
                     </form>
                     <ul class="unstyled">
                         <li class="facetitem" ng-repeat="mecanismo in mecanismos" ng-click="toggleMecanismoChecked(mecanismo)">
-                            <a href="#" ng-class="{ checked: mecanismo.checked }">
+                            <a href="#" ng-class="{ checked: mecanismo.checked }" prevent-click>
                                 {{ mecanismo.label }}
                             </a>
                         </li>
@@ -86,38 +86,88 @@
             <div class="span2"></div>
         </div>
         <div class="row">
-            <div class="span8 offset2">
+            <div class="span2 offset2">
+                <p class="pull-right" style="margin-top: 5px">Filtro avanzado:</p>
+
+                </div>
+            <div class="span6">
                 <ul class="nav nav-pills">
                     <li ng-class="{ active: !advanced }">
-                        <a href="#" ng-click="setAdvanced(null)">Ninguno</a>
+                        <a href="#" ng-click="setAdvanced(null)" prevent-click>Ninguno</a>
                     </li>
                     <li ng-class="{ active: advanced == 'empresas' }">
-                        <a href="#" data-toggle="collapse" data-target="#empresas" ng-click="setAdvanced('empresas')">Empresas</a>
+                        <a href="#" data-toggle="collapse" data-target="#empresas" ng-click="setAdvanced('empresas')" prevent-click>Empresas</a>
                     </li>
                     <li ng-class="{ active: advanced == 'instituciones' }">
-                        <a href="#" data-toggle="collapse" data-target="#instituciones" ng-click="setAdvanced('instituciones')">Instituciones</a>
+                        <a href="#" data-toggle="collapse" data-target="#instituciones" ng-click="setAdvanced('instituciones')" prevent-click>Instituciones</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="span12 collapse" id="empresas">
-                Empresas
+        <div class="row collapse" id="empresas">
+            <div class="span2 offset2">
+                <table style="width: 100%">
+                    <tr>
+                        <td><p><strong>Sector</strong></p></td>
+                        <td><a href="#" class="pull-right" ng-click="resetEmpresas('sector')" prevent-click><small>Limpiar</small></a></td>
+                    </tr>
+                </table>
+                <ul class="unstyled">
+                    <li class="facetitem" ng-repeat="fase in empresas.sector" ng-click="toggleEmpresasChecked(fase,'sector')">
+                        <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                            {{ fase.label }}
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="span12 collapse" id="instituciones">
-                Instituciones
+            <div class="span3">
+                <table style="width: 100%">
+                    <tr>
+                        <td><p><strong>Fase de desarrollo</strong></p></td>
+                        <td><a href="#" class="pull-right" ng-click="resetEmpresas('fase_de_desarrollo')" prevent-click><small>Limpiar</small></a></td>
+                    </tr>
+                </table>
+                <ul class="unstyled">
+                    <li class="facetitem" ng-repeat="fase in empresas.fase_de_desarrollo" ng-click="toggleEmpresasChecked(fase,'fase_de_desarrollo')">
+                        <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                            {{ fase.label }}
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <div class="span3">
+                <table style="width: 100%">
+                    <tr>
+                        <td><p><strong>Tipo de proyecto</strong></p></td>
+                        <td><a href="#" class="pull-right" ng-click="resetEmpresas('tipo_de_proyecto')" prevent-click><small>Limpiar</small></a></td>
+                    </tr>
+                </table>
+                <ul class="unstyled">
+                    <li class="facetitem" ng-repeat="fase in empresas.tipo_de_proyecto" ng-click="toggleEmpresasChecked(fase,'tipo_de_proyecto')">
+                        <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                            {{ fase.label }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row collapse" id="instituciones">
         </div>
     </div>
 </div>
+</div>
 <div class="row inverse fluid">
     <div class="container">
-        <div class="span12">
+        <div class="span12" ng-cloak>
             <p style="margin-top: 10px">
                 Estas viendo todos los instrumentos
                 <span ng-show="filter.beneficiarios.length > 0">cuyos beneficiarios sean <span class="filter-items">{{ filter.beneficiarios | join:'label':', ' }}</span></span>
                 <span ng-show="filter.beneficiarios.length > 0 && filter.mecanismos.length > 0"> y </span>
                 <span ng-show="filter.mecanismos.length > 0">cuyos mecanismos sean <span class="filter-items">{{ filter.mecanismos | join:'label':', ' }}</span></span>
+                <span ng-show="advanced">para {{ advanced }}</span>
+                <span ng-show="filter.empresas.sector.length > 0">del sector <span class="filter-items">{{ filter.empresas.sector | join:'label':', ' }}</span></span>
+                <span ng-show="filter.empresas.fase_de_desarrollo.length > 0">en la fase de desarrollo <span class="filter-items">{{ filter.empresas.fase_de_desarrollo | join:'label':', ' }}</span></span>
+                <span ng-show="filter.empresas.tipo_de_proyecto.length > 0">para proyectos de tipo <span class="filter-items">{{ filter.empresas.tipo_de_proyecto | join:'label':', ' }}</span></span>
                 .
             </p>
         </div>
@@ -132,7 +182,7 @@
             <div class="alert alert-info">
                 <h3>No se encontraron resutlados</h3>
                 <p>No se encontraron instrumentos con el criterio de filtro seleccionado. Pruebe limpiando el filtro y vuevla a comenzar.</p>
-                <a href="#" class="btn btn-info btn-wide" ng-click="resetFilter()">Limpiar todos los filtros</a>
+                <a href="#" class="btn btn-info btn-wide" ng-click="resetFilter()" prevent-click>Limpiar todos los filtros</a>
             </div>
         </div>
     </div>
