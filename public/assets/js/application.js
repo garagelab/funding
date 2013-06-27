@@ -113,51 +113,62 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
     $scope.empresas = {
         sector: [],
-        fase_de_desarrollo: [
-            { label: 'Startup', checked: false },
-            { label: 'Crecimiento', checked: false },
-            { label: 'Consolidación', checked: false }
-        ],
-        tipo_de_proyecto: [
-            { label: 'Modernización', checked: false },
-            { label: 'Innovación', checked: false },
-            { label: 'Generación de capacidades de I+D', checked: false },
-            { label: 'Generación de capacidades para prestar servicios', checked: false },
-            { label: 'Asociatividad', checked: false },
-            { label: 'Formación de RRHH', checked: false }
-        ]
+        fase_de_desarrollo: [],
+        tipo_de_proyecto: []
     }
 
-    $scope.instituciones = {
-        etapa: [
-            { label: 'Investigación científica y tecnológica', checked: false },
-            { label: 'Investigación y desarrollo', checked: false },
-            { label: 'Transferencia de resultados', checked: false },
-            { label: 'Unid. de apoyo a la investigación científica y tecnológica', checked: false },
-            { label: 'Unid. de apoyo a la prestación de servicios', checked: false },
-            { label: 'Reuniones científicas (o Formación de RRHH)', checked: false },
-            { label: 'Asociatividad', checked: false }
-        ],
-        area: [
-            { label: 'Cs. Biol. de Células y Moléculas', checked: false },
-            { label: 'Cs. Biol. de Organismos y Sistemas', checked: false },
-            { label: 'Cs. Físicas, Matemáticas y Astronómicas', checked: false },
-            { label: 'Cs. Clínicas y Salud Pública', checked: false },
-            { label: 'Cs. Médicas', checked: false },
-            { label: 'Cs. Químicas', checked: false },
-            { label: 'Cs. de la Tierra e Hidro-atmosféricas', checked: false },
-            { label: 'Cs. Económicas y Derecho', checked: false },
-            { label: 'Cs. Humanas', checked: false },
-            { label: 'Tecnología Agraria y Forestal', checked: false },
-            { label: 'Cs. Sociales', checked: false },
-            { label: 'Tecnol. Pecuaria y Pesquera', checked: false },
-            { label: 'Tecnol. del Medio Ambiente', checked: false },
-            { label: 'Tecnol. Química', checked: false },
-            { label: 'Tecnol. de Alimentos', checked: false },
-            { label: 'Tecnol. Energética, Minera, Mecánica y de Materiales', checked: false },
-            { label: 'Tecnol. de la información y comunicación', checked: false }
-        ]
-    }
+//    $scope.empresas = {
+//        sector: [],
+//        fase_de_desarrollo: [
+//            { label: 'Startup', checked: false },
+//            { label: 'Crecimiento', checked: false },
+//            { label: 'Consolidación', checked: false }
+//        ],
+//        tipo_de_proyecto: [
+//            { label: 'Modernización', checked: false },
+//            { label: 'Innovación', checked: false },
+//            { label: 'Generación de capacidades de I+D', checked: false },
+//            { label: 'Generación de capacidades para prestar servicios', checked: false },
+//            { label: 'Asociatividad', checked: false },
+//            { label: 'Formación de RRHH', checked: false }
+//        ]
+//    }
+//
+//    $scope.instituciones = {
+//        etapa: [],
+//        area: []
+//    }
+
+//    $scope.instituciones = {
+//        etapa: [
+//            { label: 'Investigación científica y tecnológica', checked: false },
+//            { label: 'Investigación y desarrollo', checked: false },
+//            { label: 'Transferencia de resultados', checked: false },
+//            { label: 'Unid. de apoyo a la investigación científica y tecnológica', checked: false },
+//            { label: 'Unid. de apoyo a la prestación de servicios', checked: false },
+//            { label: 'Reuniones científicas (o Formación de RRHH)', checked: false },
+//            { label: 'Asociatividad', checked: false }
+//        ],
+//        area: [
+//            { label: 'Cs. Biol. de Células y Moléculas', checked: false },
+//            { label: 'Cs. Biol. de Organismos y Sistemas', checked: false },
+//            { label: 'Cs. Físicas, Matemáticas y Astronómicas', checked: false },
+//            { label: 'Cs. Clínicas y Salud Pública', checked: false },
+//            { label: 'Cs. Médicas', checked: false },
+//            { label: 'Cs. Químicas', checked: false },
+//            { label: 'Cs. de la Tierra e Hidro-atmosféricas', checked: false },
+//            { label: 'Cs. Económicas y Derecho', checked: false },
+//            { label: 'Cs. Humanas', checked: false },
+//            { label: 'Tecnología Agraria y Forestal', checked: false },
+//            { label: 'Cs. Sociales', checked: false },
+//            { label: 'Tecnol. Pecuaria y Pesquera', checked: false },
+//            { label: 'Tecnol. del Medio Ambiente', checked: false },
+//            { label: 'Tecnol. Química', checked: false },
+//            { label: 'Tecnol. de Alimentos', checked: false },
+//            { label: 'Tecnol. Energética, Minera, Mecánica y de Materiales', checked: false },
+//            { label: 'Tecnol. de la información y comunicación', checked: false }
+//        ]
+//    }
 
     $scope.toggleEmpresasChecked = function(item, prop) {
         item.checked = !item.checked;
@@ -309,6 +320,78 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
             }
         })
         $scope.empresas.sector = sectores;
+        $scope.$apply();
+    })
+
+    // Fase de desarrollo
+    FTClient.query({
+        fields: ['fase_de_desarrollo', 'COUNT()'],
+        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
+        tail: 'GROUP BY fase_de_desarrollo ORDER BY COUNT() DESC'
+    }, function(rows) {
+        var fase_de_desarrolloes = []
+        rows.map(function(row) {
+            if (row[0] != "") {
+                fase_de_desarrolloes.push({
+                    label: row[0]
+                })
+            }
+        })
+        $scope.empresas.fase_de_desarrollo = fase_de_desarrolloes;
+        $scope.$apply();
+    })
+
+    // Tipo de proyecto
+    FTClient.query({
+        fields: ['tipo_de_proyecto', 'COUNT()'],
+        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
+        tail: 'GROUP BY tipo_de_proyecto ORDER BY COUNT() DESC'
+    }, function(rows) {
+        var tipo_de_proyectoes = []
+        rows.map(function(row) {
+            if (row[0] != "") {
+                tipo_de_proyectoes.push({
+                    label: row[0]
+                })
+            }
+        })
+        $scope.empresas.tipo_de_proyecto = tipo_de_proyectoes;
+        $scope.$apply();
+    })
+
+    // Etapa
+    FTClient.query({
+        fields: ['etapa', 'COUNT()'],
+        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
+        tail: 'GROUP BY etapa ORDER BY COUNT() DESC'
+    }, function(rows) {
+        var etapaes = []
+        rows.map(function(row) {
+            if (row[0] != "") {
+                etapaes.push({
+                    label: row[0]
+                })
+            }
+        })
+        $scope.instituciones.etapa = etapaes;
+        $scope.$apply();
+    })
+
+    // Area
+    FTClient.query({
+        fields: ['area', 'COUNT()'],
+        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
+        tail: 'GROUP BY area ORDER BY COUNT() DESC'
+    }, function(rows) {
+        var areaes = []
+        rows.map(function(row) {
+            if (row[0] != "") {
+                areaes.push({
+                    label: row[0]
+                })
+            }
+        })
+        $scope.instituciones.area = areaes;
         $scope.$apply();
     })
 
