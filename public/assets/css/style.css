@@ -1,3 +1,12 @@
+a {
+    color: #3498db;
+}
+
+a:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
 .inverse {
     background-color: #34495e;
     color: #ffffff;
@@ -38,7 +47,8 @@
 }
 
 .filter-items {
-    color: #3498db;
+    color: #999999;
+    font-weight: bold;
 }
 
 dt {
@@ -57,5 +67,9 @@ dt {
 .form-search.focus .btn {
     border-color: #3498db;
     color: #3498db;
+}
+
+.reset-filter {
+    margin: 10px 0;
 }
 

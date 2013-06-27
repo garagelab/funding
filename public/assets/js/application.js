@@ -92,9 +92,9 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
     // Beneficiarios
     FTClient.query({
-        fields: ['beneficiarios'],
+        fields: ['beneficiarios', 'COUNT()'],
         table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY beneficiarios'
+        tail: 'GROUP BY beneficiarios ORDER BY COUNT() DESC'
     }, function(rows) {
         var beneficiarios = []
         rows.map(function(row) {
@@ -111,9 +111,9 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
     // Mecanismos
     FTClient.query({
-        fields: ['mecanismos'],
+        fields: ['mecanismos', 'COUNT()'],
         table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY mecanismos'
+        tail: 'GROUP BY mecanismos ORDER BY COUNT() DESC'
     }, function(rows) {
         var mecanismos = []
         rows.map(function(row) {

@@ -38,8 +38,13 @@
             </div>
             <div class="span4">
                 <div class="well well-small facet" ng-cloak>
-                    <h6 class="pull-left"><strong>Beneficiarios</strong></h6>
-                    <a class="close" href="#" ng-click="resetBeneficiarios()">&times;</a>
+                    <table style="width: 100%">
+                        <tr>
+                            <td><h6><strong>Beneficiarios</strong></h6></td>
+                            <td><a href="#" class="reset-filter pull-right" ng-click="resetBeneficiarios()"><small>Limpiar</small></a></td>
+                        </tr>
+                    </table>
+
                     <form class="form-search">
                         <div class="input-append">
                             <input type="text" class="search-query" placeholder="Buscar beneficiarios">
@@ -59,8 +64,12 @@
             </div>
             <div class="span4">
                 <div class="well well-small facet" ng-cloak>
-                    <h6 class="pull-left"><strong>Mecanismos</strong></h6>
-                    <a class="close" href="#" ng-click="resetMecanismos()">&times;</a>
+                    <table style="width: 100%">
+                        <tr>
+                            <td><h6><strong>Mecanismos</strong></h6></td>
+                            <td><a href="#" class="reset-filter pull-right" ng-click="resetMecanismos()"><small>Limpiar</small></a></td>
+                        </tr>
+                    </table>
                     <form class="form-search">
                         <div class="input-append">
                             <input type="text" class="search-query" placeholder="Buscar mecanismos">
@@ -116,9 +125,9 @@
                         <dl>
                             <dt>Beneficiarios:</dt>
                             <dd>{{ fund.beneficiarios | nonempty }}</dd>
-                            <dt>Descripción de beneficiarios</dt>
+                            <dt>Descripción de beneficiarios:</dt>
                             <dd>{{ fund.beneficiarios_descripcion }}</dd>
-                            <dt>Tipo de beneficiarios</dt>
+                            <dt>Tipo de beneficiarios:</dt>
                             <dd>{{ fund.beneficiarios_tipo }}</dd>
                             <dt>Mecanismos:</dt>
                             <dd>{{ fund.mecanismos | nonempty }}</dd>
@@ -131,16 +140,15 @@
                             <dt>Tipo de convocatoria:</dt>
                             <dd>{{ fund.tipo_de_convocatoria | nonempty }}</dd>
                             <dt>Objetivos:</dt>
-                            <dd>{{ fund.objetivos }}</dd>
+                            <dd>{{ fund.objetivos | nonempty }}</dd>
                             <dt>Tipo de financiamiento:</dt>
-                            <dd>{{ fund.tipo_de_financiamiento }}</dd>
+                            <dd>{{ fund.tipo_de_financiamiento | nonempty }}</dd>
                             <dt>Monto máximo:</dt>
-                            <dd>{{ fund.monto_maximo }}</dd>
-                            <dt>Plazo máximo</dt>
-                            <dd>{{ fund.plazo_max }}</dd>
-                            <dt>Site:</dt>
-                            <dd><a href="{{ fund.url }}" target="_blank">{{ fund.url }}</a></dd>
+                            <dd>{{ fund.monto_maximo | nonempty }}</dd>
+                            <dt>Plazo máximo:</dt>
+                            <dd>{{ fund.plazo_max | nonempty }}</dd>
                         </dl>
+                        <p>Más información en <a href="{{ fund.url }}" target="_blank">{{ fund.url }}</a></p>
                     </div>
                 </li>
             </ul>
