@@ -163,6 +163,30 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
         })
     }
 
+    $scope.advanced = null;
+    $scope.setAdvanced = function(id) {
+
+        if (id == $scope.advanced) {
+            return;
+        }
+
+        if (!id) {
+            $("#instituciones").collapse('hide');
+            $("#empresas").collapse('hide');
+        }
+
+        if ($scope.advanced && id == "empresas") {
+            $("#instituciones").collapse('hide');
+
+        }
+
+        if ($scope.advanced && id == "instituciones") {
+            $("#empresas").collapse('hide');
+        }
+
+        $scope.advanced = id;
+    }
+
     // init
     $scope.fetch();
 }])

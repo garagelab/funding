@@ -33,6 +33,7 @@
             </div>
         </div>
         <div class="row" style="padding-top: 16px">
+            <div class="span2"></div>
             <div class="span4">
                 <div class="well well-small facet" ng-cloak>
                     <table style="width: 100%">
@@ -81,6 +82,30 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div class="span2"></div>
+        </div>
+        <div class="row">
+            <div class="span8 offset2">
+                <ul class="nav nav-pills">
+                    <li ng-class="{ active: !advanced }">
+                        <a href="#" ng-click="setAdvanced(null)">Ninguno</a>
+                    </li>
+                    <li ng-class="{ active: advanced == 'empresas' }">
+                        <a href="#" data-toggle="collapse" data-target="#empresas" ng-click="setAdvanced('empresas')">Empresas</a>
+                    </li>
+                    <li ng-class="{ active: advanced == 'instituciones' }">
+                        <a href="#" data-toggle="collapse" data-target="#instituciones" ng-click="setAdvanced('instituciones')">Instituciones</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12 collapse" id="empresas">
+                Empresas
+            </div>
+            <div class="span12 collapse" id="instituciones">
+                Instituciones
             </div>
         </div>
     </div>
