@@ -114,13 +114,15 @@
                         <td><a href="#" class="pull-right" ng-click="resetEmpresas('sector')" prevent-click><small>Limpiar</small></a></td>
                     </tr>
                 </table>
-                <ul class="unstyled">
-                    <li class="facetitem" ng-repeat="fase in empresas.sector" ng-click="toggleEmpresasChecked(fase,'sector')">
-                        <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
-                            {{ fase.label }}
-                        </a>
-                    </li>
-                </ul>
+                <div class="scroll">
+                    <ul class="unstyled">
+                        <li class="facetitem" ng-repeat="fase in empresas.sector" ng-click="toggleEmpresasChecked(fase,'sector')">
+                            <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                                {{ fase.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="span3">
                 <table style="width: 100%">
@@ -129,13 +131,15 @@
                         <td><a href="#" class="pull-right" ng-click="resetEmpresas('fase_de_desarrollo')" prevent-click><small>Limpiar</small></a></td>
                     </tr>
                 </table>
-                <ul class="unstyled">
-                    <li class="facetitem" ng-repeat="fase in empresas.fase_de_desarrollo" ng-click="toggleEmpresasChecked(fase,'fase_de_desarrollo')">
-                        <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
-                            {{ fase.label }}
-                        </a>
-                    </li>
-                </ul>
+                <div class="scroll">
+                    <ul class="unstyled">
+                        <li class="facetitem" ng-repeat="fase in empresas.fase_de_desarrollo" ng-click="toggleEmpresasChecked(fase,'fase_de_desarrollo')">
+                            <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                                {{ fase.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="span3">
                 <table style="width: 100%">
@@ -144,16 +148,52 @@
                         <td><a href="#" class="pull-right" ng-click="resetEmpresas('tipo_de_proyecto')" prevent-click><small>Limpiar</small></a></td>
                     </tr>
                 </table>
-                <ul class="unstyled">
-                    <li class="facetitem" ng-repeat="fase in empresas.tipo_de_proyecto" ng-click="toggleEmpresasChecked(fase,'tipo_de_proyecto')">
-                        <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
-                            {{ fase.label }}
-                        </a>
-                    </li>
-                </ul>
+                <div class="scroll">
+                    <ul class="unstyled">
+                        <li class="facetitem" ng-repeat="fase in empresas.tipo_de_proyecto" ng-click="toggleEmpresasChecked(fase,'tipo_de_proyecto')">
+                            <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                                {{ fase.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="row collapse" id="instituciones">
+            <div class="span3 offset3">
+                <table style="width: 100%">
+                    <tr>
+                        <td><p><strong>Etapas</strong></p></td>
+                        <td><a href="#" class="pull-right" ng-click="resetInstituciones('etapa')" prevent-click><small>Limpiar</small></a></td>
+                    </tr>
+                </table>
+                <div class="scroll">
+                    <ul class="unstyled">
+                        <li class="facetitem" ng-repeat="fase in instituciones.etapa" ng-click="toggleInstitucionesChecked(fase,'etapa')">
+                            <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                                {{ fase.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span3">
+                <table style="width: 100%">
+                    <tr>
+                        <td><p><strong>Áreas</strong></p></td>
+                        <td><a href="#" class="pull-right" ng-click="resetInstituciones('area')" prevent-click><small>Limpiar</small></a></td>
+                    </tr>
+                </table>
+                <div class="scroll">
+                    <ul class="unstyled">
+                        <li class="facetitem" ng-repeat="fase in instituciones.area" ng-click="toggleInstitucionesChecked(fase,'area')">
+                            <a href="#" ng-class="{ checked: fase.checked }" prevent-click>
+                                {{ fase.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -167,9 +207,11 @@
                 <span ng-show="filter.beneficiarios.length > 0 && filter.mecanismos.length > 0"> y </span>
                 <span ng-show="filter.mecanismos.length > 0">cuyos mecanismos sean <span class="filter-items">{{ filter.mecanismos | join:'label':', ' }}</span></span>
                 <span ng-show="advanced">para {{ advanced }}</span>
-                <span ng-show="filter.empresas.sector.length > 0">del sector <span class="filter-items">{{ filter.empresas.sector | join:'label':', ' }}</span></span>
-                <span ng-show="filter.empresas.fase_de_desarrollo.length > 0">en la fase de desarrollo <span class="filter-items">{{ filter.empresas.fase_de_desarrollo | join:'label':', ' }}</span></span>
-                <span ng-show="filter.empresas.tipo_de_proyecto.length > 0">para proyectos de tipo <span class="filter-items">{{ filter.empresas.tipo_de_proyecto | join:'label':', ' }}</span></span>
+                <span ng-show="advanced == 'empresas' && filter.empresas.sector.length > 0">del sector <span class="filter-items">{{ filter.empresas.sector | join:'label':', ' }}</span></span>
+                <span ng-show="advanced == 'empresas' && filter.empresas.fase_de_desarrollo.length > 0">en la fase de desarrollo <span class="filter-items">{{ filter.empresas.fase_de_desarrollo | join:'label':', ' }}</span></span>
+                <span ng-show="advanced == 'empresas' && filter.empresas.tipo_de_proyecto.length > 0">para proyectos de tipo <span class="filter-items">{{ filter.empresas.tipo_de_proyecto | join:'label':', ' }}</span></span>
+                <span ng-show="advanced == 'instituciones' && filter.instituciones.etapa.length > 0">en la etapa de <span class="filter-items">{{ filter.instituciones.etapa | join:'label':', ' }}</span></span>
+                <span ng-show="advanced == 'instituciones' && filter.instituciones.area.length > 0">del area <span class="filter-items">{{ filter.instituciones.area | join:'label':', ' }}</span></span>
                 .
             </p>
         </div>

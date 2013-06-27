@@ -18,6 +18,10 @@ services.service('Filter', ['FTClient', function(FTClient) {
             sector: [],
             fase_de_desarrollo: [],
             tipo_de_proyecto: []
+        },
+        instituciones: {
+            etapa: [],
+            area: []
         }
     }
 }])
@@ -94,6 +98,10 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
         $scope.empresas['fase_de_desarrollo'].map(function(item) { item.checked = false; })
         Filter.empresas['tipo_de_proyecto'] = [];
         $scope.empresas['tipo_de_proyecto'].map(function(item) { item.checked = false; })
+        Filter.instituciones['etapa'] = [];
+        $scope.instituciones['etapa'].map(function(item) { item.checked = false; })
+        Filter.instituciones['area'] = [];
+        $scope.instituciones['area'].map(function(item) { item.checked = false; })
         $scope.facet();
     }
 
@@ -111,12 +119,43 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
             { label: 'Consolidación', checked: false }
         ],
         tipo_de_proyecto: [
-            { label: 'Modernización' },
-            { label: 'Innovación' },
-            { label: 'Generación de capacidades de I+D' },
-            { label: 'Generación de capacidades para prestar servicios' },
-            { label: 'Asociatividad' },
-            { label: 'Formación de RRHH' }
+            { label: 'Modernización', checked: false },
+            { label: 'Innovación', checked: false },
+            { label: 'Generación de capacidades de I+D', checked: false },
+            { label: 'Generación de capacidades para prestar servicios', checked: false },
+            { label: 'Asociatividad', checked: false },
+            { label: 'Formación de RRHH', checked: false }
+        ]
+    }
+
+    $scope.instituciones = {
+        etapa: [
+            { label: 'Investigación científica y tecnológica', checked: false },
+            { label: 'Investigación y desarrollo', checked: false },
+            { label: 'Transferencia de resultados', checked: false },
+            { label: 'Unid. de apoyo a la investigación científica y tecnológica', checked: false },
+            { label: 'Unid. de apoyo a la prestación de servicios', checked: false },
+            { label: 'Reuniones científicas (o Formación de RRHH)', checked: false },
+            { label: 'Asociatividad', checked: false }
+        ],
+        area: [
+            { label: 'Cs. Biol. de Células y Moléculas', checked: false },
+            { label: 'Cs. Biol. de Organismos y Sistemas', checked: false },
+            { label: 'Cs. Físicas, Matemáticas y Astronómicas', checked: false },
+            { label: 'Cs. Clínicas y Salud Pública', checked: false },
+            { label: 'Cs. Médicas', checked: false },
+            { label: 'Cs. Químicas', checked: false },
+            { label: 'Cs. de la Tierra e Hidro-atmosféricas', checked: false },
+            { label: 'Cs. Económicas y Derecho', checked: false },
+            { label: 'Cs. Humanas', checked: false },
+            { label: 'Tecnología Agraria y Forestal', checked: false },
+            { label: 'Cs. Sociales', checked: false },
+            { label: 'Tecnol. Pecuaria y Pesquera', checked: false },
+            { label: 'Tecnol. del Medio Ambiente', checked: false },
+            { label: 'Tecnol. Química', checked: false },
+            { label: 'Tecnol. de Alimentos', checked: false },
+            { label: 'Tecnol. Energética, Minera, Mecánica y de Materiales', checked: false },
+            { label: 'Tecnol. de la información y comunicación', checked: false }
         ]
     }
 
@@ -132,12 +171,25 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
         $scope.facet();
     }
 
+    $scope.toggleInstitucionesChecked = function(item, prop) {
+        item.checked = !item.checked;
+        Filter.instituciones[prop] = $scope.instituciones[prop].filter(function(item) { return item.checked; })
+        $scope.facet();
+    }
+
+    $scope.resetInstituciones = function(prop) {
+        Filter.instituciones[prop] = [];
+        $scope.instituciones[prop].map(function(item) { item.checked = false; })
+        $scope.facet();
+    }
+
     $scope.facet = function() {
         var beneficiarios = {};
         Filter.beneficiarios.map(function(item) { beneficiarios[item.label] = 1; })
         var mecanismos = {};
         Filter.mecanismos.map(function(item) { mecanismos[item.label] = 1; })
 
+        // Empresas
         var empresas = null;
         if ($scope.advanced == "empresas") {
             empresas = {};
@@ -152,6 +204,20 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
             empresas['sector'] = {};
             Filter.empresas.sector.map(function(item) {
                 empresas['sector'][item.label] = 1
+            })
+        }
+
+        // Instituciones
+        var instituciones = null;
+        if ($scope.advanced == "instituciones") {
+            instituciones = {};
+            instituciones['etapa'] = {};
+            Filter.instituciones.etapa.map(function(item) {
+                instituciones['etapa'][item.label] = 1
+            })
+            instituciones['area'] = {};
+            Filter.instituciones.area.map(function(item) {
+                instituciones['area'][item.label] = 1
             })
         }
 
@@ -174,6 +240,16 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
                 }
                 if (Filter.empresas.sector.length > 0) {
                     retain = retain && fund.sector in empresas.sector;
+                }
+            }
+
+            // Instituciones
+            if ($scope.advanced == "instituciones") {
+                if (Filter.instituciones.area.length > 0) {
+                    retain = retain && fund.area in instituciones.area;
+                }
+                if (Filter.instituciones.etapa.length > 0) {
+                    retain = retain && fund.etapa in instituciones.etapa;
                 }
             }
 
@@ -261,7 +337,9 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
                     plazo_max: row[14],
                     detalle: row[15] == "" ? null : row[15],
                     url: row[16],
-                    instrumento: row[17]
+                    instrumento: row[17],
+                    area: row[18],
+                    etapa: row[19]
                 })
             })
 
