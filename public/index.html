@@ -74,13 +74,15 @@
                             <button type="submit" class="btn"><span class="fui-search"></span></button>
                         </div>
                     </form>
-                    <ul class="unstyled">
-                        <li class="facetitem" ng-repeat="mecanismo in mecanismos" ng-click="toggleMecanismoChecked(mecanismo)">
-                            <a href="#" ng-class="{ checked: mecanismo.checked }" prevent-click>
-                                {{ mecanismo.label }}
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="scroll">
+                        <ul class="unstyled">
+                            <li class="facetitem" ng-repeat="mecanismo in mecanismos" ng-click="toggleMecanismoChecked(mecanismo)">
+                                <a href="#" ng-class="{ checked: mecanismo.checked }" prevent-click>
+                                    {{ mecanismo.label }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="span2"></div>
@@ -89,7 +91,7 @@
             <div class="span2 offset2">
                 <p class="pull-right" style="margin-top: 5px">Filtro avanzado:</p>
 
-                </div>
+            </div>
             <div class="span6">
                 <ul class="nav nav-pills">
                     <li ng-class="{ active: !advanced }">
