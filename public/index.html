@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="row light">
-    <div class="container">
+    <div class="container" style="padding-bottom: 16px">
         <div class="row" ng-show="debug">
             <div class="span12">
                 <div class="well">
@@ -204,7 +204,7 @@
     <div class="container">
         <div class="span12" ng-cloak>
             <p style="margin-top: 10px">
-                Estas viendo todos los instrumentos
+                Estas viendo {{ funds.length }} instrumentos
                 <span ng-show="filter.beneficiarios.length > 0">cuyos beneficiarios sean <span class="filter-items">{{ filter.beneficiarios | join:'label':', ' }}</span></span>
                 <span ng-show="filter.beneficiarios.length > 0 && filter.mecanismos.length > 0"> y </span>
                 <span ng-show="filter.mecanismos.length > 0">cuyos mecanismos sean <span class="filter-items">{{ filter.mecanismos | join:'label':', ' }}</span></span>
@@ -227,7 +227,7 @@
         <div class="span12" ng-show="funds.length == 0">
             <div class="alert alert-info">
                 <h3>No se encontraron resutlados</h3>
-                <p>No se encontraron instrumentos con el criterio de filtro seleccionado. Pruebe limpiando el filtro y vuevla a comenzar.</p>
+                <p>No se encontraron instrumentos con el criterio de filtro seleccionado. Pruebe limpiando el filtro y vuelva a comenzar.</p>
                 <a href="#" class="btn btn-info btn-wide" ng-click="resetFilter()" prevent-click>Limpiar todos los filtros</a>
             </div>
         </div>
