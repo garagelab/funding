@@ -13,16 +13,8 @@ services.service('FTClient', [function() {
 services.service('Filter', ['FTClient', function(FTClient) {
     return {
         beneficiarios: [],
-        mecanismos: [],
-        empresas: {
-            sector: [],
-            fase_de_desarrollo: [],
-            tipo_de_proyecto: []
-        },
-        instituciones: {
-            etapa: [],
-            area: []
-        }
+        tipos_de_proyecto: [],
+        tipos_de_convocatoria: []
     }
 }])
 
@@ -69,6 +61,7 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
     $scope.filter = Filter;
     $scope.debug = false;
 
+    // Beneficiarios
     $scope.toggleBeneficiarioChecked = function(beneficiario) {
         beneficiario.checked = !beneficiario.checked;
         Filter.beneficiarios = $scope.beneficiarios.filter(function(item) { return item.checked; })
@@ -81,187 +74,61 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
         $scope.facet();
     }
 
-    $scope.resetMecanismos = function() {
-        Filter.mecanismos = [];
-        $scope.mecanismos.map(function(item) { item.checked = false; })
+    // Tipo de proyecto
+    $scope.toggleTipoDeProyectoChecked = function(tipo) {
+        tipo.checked = !tipo.checked;
+        Filter.tipos_de_proyecto = $scope.tipos_de_proyecto.filter(function(item) { return item.checked; })
+        $scope.facet();
+    }
+
+    $scope.resetTipoDeProyecto = function() {
+        Filter.tipos_de_proyecto = [];
+        $scope.tipos_de_proyecto.map(function(item) { item.checked = false; })
+        $scope.facet();
+    }
+
+    // Tipo de convocatoria
+    $scope.toggleTipoDeConvocatoriaChecked = function(tipo) {
+        tipo.checked = !tipo.checked;
+        Filter.tipos_de_convocatoria = $scope.tipos_de_convocatoria.filter(function(item) { return item.checked; })
+        $scope.facet();
+    }
+
+    $scope.resetTipoDeConvocatoria = function() {
+        Filter.tipos_de_convocatoria = [];
+        $scope.tipos_de_convocatoria.map(function(item) { item.checked = false; })
         $scope.facet();
     }
 
     $scope.resetFilter = function() {
         Filter.beneficiarios = [];
         $scope.beneficiarios.map(function(item) { item.checked = false; })
-        Filter.mecanismos = [];
-        $scope.mecanismos.map(function(item) { item.checked = false; })
-        Filter.empresas['sector'] = [];
-        $scope.empresas['sector'].map(function(item) { item.checked = false; })
-        Filter.empresas['fase_de_desarrollo'] = [];
-        $scope.empresas['fase_de_desarrollo'].map(function(item) { item.checked = false; })
-        Filter.empresas['tipo_de_proyecto'] = [];
-        $scope.empresas['tipo_de_proyecto'].map(function(item) { item.checked = false; })
-        Filter.instituciones['etapa'] = [];
-        $scope.instituciones['etapa'].map(function(item) { item.checked = false; })
-        Filter.instituciones['area'] = [];
-        $scope.instituciones['area'].map(function(item) { item.checked = false; })
-        $scope.facet();
-    }
-
-    $scope.toggleMecanismoChecked = function(mecanismo) {
-        mecanismo.checked = !mecanismo.checked;
-        Filter.mecanismos = $scope.mecanismos.filter(function(item) { return item.checked; })
-        $scope.facet();
-    }
-
-    $scope.empresas = {
-        sector: [],
-        fase_de_desarrollo: [],
-        tipo_de_proyecto: []
-    }
-
-//    $scope.empresas = {
-//        sector: [],
-//        fase_de_desarrollo: [
-//            { label: 'Startup', checked: false },
-//            { label: 'Crecimiento', checked: false },
-//            { label: 'Consolidación', checked: false }
-//        ],
-//        tipo_de_proyecto: [
-//            { label: 'Modernización', checked: false },
-//            { label: 'Innovación', checked: false },
-//            { label: 'Generación de capacidades de I+D', checked: false },
-//            { label: 'Generación de capacidades para prestar servicios', checked: false },
-//            { label: 'Asociatividad', checked: false },
-//            { label: 'Formación de RRHH', checked: false }
-//        ]
-//    }
-//
-//    $scope.instituciones = {
-//        etapa: [],
-//        area: []
-//    }
-
-//    $scope.instituciones = {
-//        etapa: [
-//            { label: 'Investigación científica y tecnológica', checked: false },
-//            { label: 'Investigación y desarrollo', checked: false },
-//            { label: 'Transferencia de resultados', checked: false },
-//            { label: 'Unid. de apoyo a la investigación científica y tecnológica', checked: false },
-//            { label: 'Unid. de apoyo a la prestación de servicios', checked: false },
-//            { label: 'Reuniones científicas (o Formación de RRHH)', checked: false },
-//            { label: 'Asociatividad', checked: false }
-//        ],
-//        area: [
-//            { label: 'Cs. Biol. de Células y Moléculas', checked: false },
-//            { label: 'Cs. Biol. de Organismos y Sistemas', checked: false },
-//            { label: 'Cs. Físicas, Matemáticas y Astronómicas', checked: false },
-//            { label: 'Cs. Clínicas y Salud Pública', checked: false },
-//            { label: 'Cs. Médicas', checked: false },
-//            { label: 'Cs. Químicas', checked: false },
-//            { label: 'Cs. de la Tierra e Hidro-atmosféricas', checked: false },
-//            { label: 'Cs. Económicas y Derecho', checked: false },
-//            { label: 'Cs. Humanas', checked: false },
-//            { label: 'Tecnología Agraria y Forestal', checked: false },
-//            { label: 'Cs. Sociales', checked: false },
-//            { label: 'Tecnol. Pecuaria y Pesquera', checked: false },
-//            { label: 'Tecnol. del Medio Ambiente', checked: false },
-//            { label: 'Tecnol. Química', checked: false },
-//            { label: 'Tecnol. de Alimentos', checked: false },
-//            { label: 'Tecnol. Energética, Minera, Mecánica y de Materiales', checked: false },
-//            { label: 'Tecnol. de la información y comunicación', checked: false }
-//        ]
-//    }
-
-    $scope.toggleEmpresasChecked = function(item, prop) {
-        item.checked = !item.checked;
-        Filter.empresas[prop] = $scope.empresas[prop].filter(function(item) { return item.checked; })
-        $scope.facet();
-    }
-
-    $scope.resetEmpresas = function(prop) {
-        Filter.empresas[prop] = [];
-        $scope.empresas[prop].map(function(item) { item.checked = false; })
-        $scope.facet();
-    }
-
-    $scope.toggleInstitucionesChecked = function(item, prop) {
-        item.checked = !item.checked;
-        Filter.instituciones[prop] = $scope.instituciones[prop].filter(function(item) { return item.checked; })
-        $scope.facet();
-    }
-
-    $scope.resetInstituciones = function(prop) {
-        Filter.instituciones[prop] = [];
-        $scope.instituciones[prop].map(function(item) { item.checked = false; })
+        Filter.tipos_de_proyecto = [];
+        $scope.tipos_de_proyecto.map(function(item) { item.checked = false; })
+        Filter.tipos_de_convocatoria = [];
+        $scope.tipos_de_convocatoria.map(function(item) { item.checked = false; })
         $scope.facet();
     }
 
     $scope.facet = function() {
         var beneficiarios = {};
         Filter.beneficiarios.map(function(item) { beneficiarios[item.label] = 1; })
-        var mecanismos = {};
-        Filter.mecanismos.map(function(item) { mecanismos[item.label] = 1; })
+        var tipos_de_proyecto = {};
+        Filter.tipos_de_proyecto.map(function(item) { tipos_de_proyecto[item.label] = 1; })
+        var tipos_de_convocatoria = {};
+        Filter.tipos_de_convocatoria.map(function(item) { tipos_de_convocatoria[item.label] = 1; })
 
-        // Empresas
-        var empresas = null;
-        if ($scope.advanced == "empresas") {
-            empresas = {};
-            empresas['fase_de_desarrollo'] = {};
-            Filter.empresas.fase_de_desarrollo.map(function(item) {
-                empresas['fase_de_desarrollo'][item.label] = 1
-            })
-            empresas['tipo_de_proyecto'] = {};
-            Filter.empresas.tipo_de_proyecto.map(function(item) {
-                empresas['tipo_de_proyecto'][item.label] = 1
-            })
-            empresas['sector'] = {};
-            Filter.empresas.sector.map(function(item) {
-                empresas['sector'][item.label] = 1
-            })
-        }
-
-        // Instituciones
-        var instituciones = null;
-        if ($scope.advanced == "instituciones") {
-            instituciones = {};
-            instituciones['etapa'] = {};
-            Filter.instituciones.etapa.map(function(item) {
-                instituciones['etapa'][item.label] = 1
-            })
-            instituciones['area'] = {};
-            Filter.instituciones.area.map(function(item) {
-                instituciones['area'][item.label] = 1
-            })
-        }
 
         $scope.funds = $scope.results.filter(function(fund) {
             var retain = true;
             if (Filter.beneficiarios.length > 0) {
                 retain = retain && fund.beneficiarios in beneficiarios;
             }
-            if (Filter.mecanismos.length > 0) {
-                retain = retain && fund.mecanismos in mecanismos;
+            if (Filter.tipos_de_proyecto.length > 0) {
+                retain = retain && fund.tipo_de_proyecto in tipos_de_proyecto;
             }
-
-            // Empresas
-            if ($scope.advanced == "empresas") {
-                if (Filter.empresas.fase_de_desarrollo.length > 0) {
-                    retain = retain && fund.fase_de_desarrollo in empresas.fase_de_desarrollo;
-                }
-                if (Filter.empresas.tipo_de_proyecto.length > 0) {
-                    retain = retain && fund.tipo_de_proyecto in empresas.tipo_de_proyecto;
-                }
-                if (Filter.empresas.sector.length > 0) {
-                    retain = retain && fund.sector in empresas.sector;
-                }
-            }
-
-            // Instituciones
-            if ($scope.advanced == "instituciones") {
-                if (Filter.instituciones.area.length > 0) {
-                    retain = retain && fund.area in instituciones.area;
-                }
-                if (Filter.instituciones.etapa.length > 0) {
-                    retain = retain && fund.etapa in instituciones.etapa;
-                }
+            if (Filter.tipos_de_convocatoria.length > 0) {
+                retain = retain && fund.tipo_de_convocatoria in tipos_de_convocatoria;
             }
 
             return retain;
@@ -287,111 +154,39 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
         $scope.$apply();
     })
 
-    // Mecanismos
-    FTClient.query({
-        fields: ['tipo_de_financiamiento', 'COUNT()'],
-        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY tipo_de_financiamiento ORDER BY COUNT() DESC'
-    }, function(rows) {
-        var mecanismos = []
-        rows.map(function(row) {
-            if (row[0] != "") {
-                mecanismos.push({
-                    label: row[0]
-                })
-            }
-        })
-        $scope.mecanismos = mecanismos;
-        $scope.$apply();
-    })
-
-    // Sector
-    FTClient.query({
-        fields: ['sector', 'COUNT()'],
-        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY sector ORDER BY COUNT() DESC'
-    }, function(rows) {
-        var sectores = []
-        rows.map(function(row) {
-            if (row[0] != "") {
-                sectores.push({
-                    label: row[0]
-                })
-            }
-        })
-        $scope.empresas.sector = sectores;
-        $scope.$apply();
-    })
-
-    // Fase de desarrollo
-    FTClient.query({
-        fields: ['fase_de_desarrollo', 'COUNT()'],
-        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY fase_de_desarrollo ORDER BY COUNT() DESC'
-    }, function(rows) {
-        var fase_de_desarrolloes = []
-        rows.map(function(row) {
-            if (row[0] != "") {
-                fase_de_desarrolloes.push({
-                    label: row[0]
-                })
-            }
-        })
-        $scope.empresas.fase_de_desarrollo = fase_de_desarrolloes;
-        $scope.$apply();
-    })
-
     // Tipo de proyecto
     FTClient.query({
         fields: ['tipo_de_proyecto', 'COUNT()'],
         table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
         tail: 'GROUP BY tipo_de_proyecto ORDER BY COUNT() DESC'
     }, function(rows) {
-        var tipo_de_proyectoes = []
+        var tipo_de_proyectos = []
         rows.map(function(row) {
             if (row[0] != "") {
-                tipo_de_proyectoes.push({
+                tipo_de_proyectos.push({
                     label: row[0]
                 })
             }
         })
-        $scope.empresas.tipo_de_proyecto = tipo_de_proyectoes;
+        $scope.tipos_de_proyecto = tipo_de_proyectos;
         $scope.$apply();
     })
 
-    // Etapa
+    // Tipo de convocatoria
     FTClient.query({
-        fields: ['etapa', 'COUNT()'],
+        fields: ['tipo_de_convocatoria', 'COUNT()'],
         table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY etapa ORDER BY COUNT() DESC'
+        tail: 'GROUP BY tipo_de_convocatoria ORDER BY COUNT() DESC'
     }, function(rows) {
-        var etapaes = []
+        var tipo_de_convocatoria = []
         rows.map(function(row) {
             if (row[0] != "") {
-                etapaes.push({
+                tipo_de_convocatoria.push({
                     label: row[0]
                 })
             }
         })
-        $scope.instituciones.etapa = etapaes;
-        $scope.$apply();
-    })
-
-    // Area
-    FTClient.query({
-        fields: ['area', 'COUNT()'],
-        table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY area ORDER BY COUNT() DESC'
-    }, function(rows) {
-        var areaes = []
-        rows.map(function(row) {
-            if (row[0] != "") {
-                areaes.push({
-                    label: row[0]
-                })
-            }
-        })
-        $scope.instituciones.area = areaes;
+        $scope.tipos_de_convocatoria = tipo_de_convocatoria;
         $scope.$apply();
     })
 
@@ -430,31 +225,6 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
             $scope.results = funds;
             $scope.$apply();
         })
-    }
-
-    $scope.advanced = null;
-    $scope.setAdvanced = function(id) {
-
-        if (id == $scope.advanced) {
-            return;
-        }
-
-        if (!id) {
-            $("#instituciones").collapse('hide');
-            $("#empresas").collapse('hide');
-        }
-
-        if ($scope.advanced && id == "empresas") {
-            $("#instituciones").collapse('hide');
-
-        }
-
-        if ($scope.advanced && id == "instituciones") {
-            $("#empresas").collapse('hide');
-        }
-
-        $scope.advanced = id;
-        $scope.facet();
     }
 
     // init
