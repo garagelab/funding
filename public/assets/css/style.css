@@ -8,8 +8,13 @@ a:hover {
 }
 
 .inverse {
-    background-color: #34495e;
+    background-color: #1d6496;
     color: #ffffff;
+}
+
+.inverse h1 {
+    font-size: 36px;
+    line-height: 60px;
 }
 
 .fluid {
@@ -46,6 +51,10 @@ a:hover {
     color: #3498db;
 }
 
+.filter {
+    background-color: #1cbcea;;
+}
+
 .filter-items {
     color: #999999;
     font-weight: bold;
@@ -57,7 +66,7 @@ dt {
 }
 
 .search-query {
-    width: 100%;
+    width: 290px;
 }
 
 .form-search.focus input {
@@ -86,3 +95,6 @@ dt {
     background-color: #36adf3;
 }
 
+.bottom-menu {
+    background-color: #1d6496;
+}
