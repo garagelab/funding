@@ -120,23 +120,49 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
         $scope.funds = $scope.results.filter(function(fund) {
             var retain = true;
+            
             if (Filter.beneficiarios.length > 0) {
                 var matches = false;
                 for (var i=0; i<Filter.beneficiarios.length; i++) {
-                    if (fund.beneficiarios.indexOf(Filter.beneficiarios[i].label) > 0) {
-                        matches = true;
-                        break;
+                    var parts = fund.beneficiarios.split(", ");
+                    for (var j=0; j < parts.length; j++) {
+                        if (parts[j] == Filter.beneficiarios[i].label) {
+                            matches = true;
+                            break;
+                        }
                     }
                 }
                 retain = retain && matches;
             }
+
             if (Filter.tipos_de_proyecto.length > 0) {
-                retain = retain && fund.tipo_de_proyecto in tipos_de_proyecto;
-            }
-            if (Filter.tipos_de_convocatoria.length > 0) {
-                retain = retain && fund.tipo_de_convocatoria in tipos_de_convocatoria;
+                var matches = false;
+                for (var i=0; i<Filter.tipos_de_proyecto.length; i++) {
+                    var parts = fund.tipo_de_proyecto.split(", ");
+                    for (var j=0; j < parts.length; j++) {
+                        if (parts[j] == Filter.tipos_de_proyecto[i].label) {
+                            matches = true;
+                            break;
+                        }
+                    }
+                }
+                retain = retain && matches;
             }
 
+            if (Filter.tipos_de_convocatoria.length > 0) {
+                var matches = false;
+                for (var i=0; i<Filter.tipos_de_convocatoria.length; i++) {
+                    var parts = fund.tipo_de_convocatoria.split(", ");
+                    for (var j=0; j < parts.length; j++) {
+                        if (parts[j] == Filter.tipos_de_convocatoria[i].label) {
+                            matches = true;
+                            break;
+                        }
+                    }
+                }
+                retain = retain && matches;
+            }
+            
             return retain;
         })
     }
