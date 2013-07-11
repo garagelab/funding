@@ -155,30 +155,25 @@
                         <h6>{{ fund.instrumento }}</h6>
                         <p ng-show="fund.detalle">{{ fund.detalle }}</p>
                         <dl>
-                            <dt>Beneficiarios:</dt>
-                            <dd>{{ fund.beneficiarios | nonempty }}</dd>
-                            <dt>Descripción de beneficiarios:</dt>
-                            <dd>{{ fund.beneficiarios_descripcion }}</dd>
-                            <dt>Tipo de beneficiarios:</dt>
-                            <dd>{{ fund.beneficiarios_tipo }}</dd>
-                            <dt>Mecanismos:</dt>
-                            <dd>{{ fund.mecanismos | nonempty }}</dd>
-                            <dt>Sector:</dt>
-                            <dd>{{ fund.sector | nonempty }}</dd>
-                            <dt>Fase de desarrollo:</dt>
-                            <dd>{{ fund.fase_de_desarrollo | nonempty }}</dd>
-                            <dt>Tipo de proyecto:</dt>
-                            <dd>{{ fund.tipo_de_proyecto | nonempty }}</dd>
+                            <dt>Instrumento:</dt>
+                            <dd>{{ fund.instrumento_completo | nonempty }}</dd>
                             <dt>Tipo de convocatoria:</dt>
                             <dd>{{ fund.tipo_de_convocatoria | nonempty }}</dd>
                             <dt>Objetivos:</dt>
                             <dd>{{ fund.objetivos | nonempty }}</dd>
+                            <dt>Beneficiarios:</dt>
+                            <dd>{{ fund.beneficiarios | nonempty }}</dd>
+                            <dt>Descripción de beneficiarios:</dt>
+                            <dd>{{ fund.beneficiarios_descripcion }}</dd>
                             <dt>Tipo de financiamiento:</dt>
                             <dd>{{ fund.tipo_de_financiamiento | nonempty }}</dd>
-                            <dt>Monto máximo:</dt>
+                            <dt>Monto máximo de cobertura:</dt>
                             <dd>{{ fund.monto_maximo | nonempty }}</dd>
-                            <dt>Plazo máximo:</dt>
+                            <dt>Plazo máximo de ejecucuión:</dt>
                             <dd>{{ fund.plazo_max | nonempty }}</dd>
+                            <dt>Trabajo colaborativo con universidad:</dt>
+                            <dd>{{ fund.trabajo_colaborativo_con_universidad | nonempty }}</dd>
+
                         </dl>
                         <p>Más información en <a href="{{ fund.url }}" target="_blank">{{ fund.url }}</a></p>
                     </div>

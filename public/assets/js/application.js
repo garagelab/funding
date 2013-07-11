@@ -255,7 +255,9 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
                     url: row[16],
                     instrumento: row[17],
                     area: row[18],
-                    etapa: row[19]
+                    etapa: row[19],
+                    trabajo_colaborativo_con_universidad: row[20],
+                    instrumento_completo: row[21]
                 })
             })
 
