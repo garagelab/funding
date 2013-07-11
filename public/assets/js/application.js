@@ -118,11 +118,17 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
         var tipos_de_convocatoria = {};
         Filter.tipos_de_convocatoria.map(function(item) { tipos_de_convocatoria[item.label] = 1; })
 
-
         $scope.funds = $scope.results.filter(function(fund) {
             var retain = true;
             if (Filter.beneficiarios.length > 0) {
-                retain = retain && fund.beneficiarios in beneficiarios;
+                var matches = false;
+                for (var i=0; i<Filter.beneficiarios.length; i++) {
+                    if (fund.beneficiarios.indexOf(Filter.beneficiarios[i].label) > 0) {
+                        matches = true;
+                        break;
+                    }
+                }
+                retain = retain && matches;
             }
             if (Filter.tipos_de_proyecto.length > 0) {
                 retain = retain && fund.tipo_de_proyecto in tipos_de_proyecto;
@@ -137,17 +143,23 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
     // Beneficiarios
     FTClient.query({
-        fields: ['beneficiarios', 'COUNT()'],
+        fields: ['beneficiarios'],
         table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY beneficiarios ORDER BY COUNT() DESC'
+        tail: 'GROUP BY beneficiarios'
     }, function(rows) {
         var beneficiarios = []
         rows.map(function(row) {
             if (row[0] != null) {
-                beneficiarios.push({
-                    label: row[0],
-                    checked: false
-                })
+                var parts = row[0].split(", ");
+                for (var i=0; i<parts.length; i++) {
+                    var exists = beneficiarios.filter(function(beneficiario) { return beneficiario.label == parts[i] }).length > 0;
+                    if (!exists) {
+                        beneficiarios.push({
+                            label: parts[i],
+                            checked: false
+                        })
+                    }
+                }
             }
         })
         $scope.beneficiarios = beneficiarios;
@@ -156,9 +168,9 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
     // Tipo de proyecto
     FTClient.query({
-        fields: ['tipo_de_proyecto', 'COUNT()'],
+        fields: ['tipo_de_proyecto'],
         table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY tipo_de_proyecto ORDER BY COUNT() DESC'
+        tail: 'GROUP BY tipo_de_proyecto'
     }, function(rows) {
         var tipo_de_proyectos = []
         rows.map(function(row) {
@@ -174,9 +186,9 @@ controllers.controller('AppController', ['$scope', 'Filter', 'FTClient', functio
 
     // Tipo de convocatoria
     FTClient.query({
-        fields: ['tipo_de_convocatoria', 'COUNT()'],
+        fields: ['tipo_de_convocatoria'],
         table: '1QqoOKkOXGNBcaVrkcb0l93VseJKtjeoMqwqg-x8',
-        tail: 'GROUP BY tipo_de_convocatoria ORDER BY COUNT() DESC'
+        tail: 'GROUP BY tipo_de_convocatoria'
     }, function(rows) {
         var tipo_de_convocatoria = []
         rows.map(function(row) {
