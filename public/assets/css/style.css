@@ -52,7 +52,7 @@ a:hover {
 }
 
 .filter {
-    background-color: #1cbcea;;
+    background-color: #1cbcea;
 }
 
 .filter-items {
@@ -97,4 +97,14 @@ dt {
 
 .bottom-menu {
     background-color: #1d6496;
+}
+
+.glossary a {
+    font-size: 15px;
+    background-color: #1cbcea;
+    color: #ffffff;
+}
+
+.bottom-menu a {
+    color: #ffffff;
 }
