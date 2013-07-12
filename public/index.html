@@ -28,13 +28,6 @@
 </div>
 <div class="row filter">
     <div class="container" style="padding-bottom: 16px">
-        <div class="row" ng-show="debug">
-            <div class="span12">
-                <div class="well">
-                    {{ filter | json }}
-                </div>
-            </div>
-        </div>
         <div class="row" style="padding-top: 16px">
             <div class="span12">
                 <p>El propósito de esta herramienta es ayudar a los posibles beneficiarios a visualizar e identificar las diversas opciones de financiamiento (disponibles en la Agencia Nacional de Promoción Científica y Tecnológica), de acuerdo a sus requerimientos y necesidades.</p>
@@ -47,13 +40,6 @@
                             <td><a href="#" class="reset-filter pull-right" ng-click="resetBeneficiarios()" prevent-click><small>Limpiar</small></a></td>
                         </tr>
                     </table>
-
-                    <form class="form-search">
-                        <div class="input-append">
-                            <input type="text" class="search-query" placeholder="Buscar beneficiarios" ng-model="beneficiarios_query">
-                            <button type="submit" class="btn"><span class="fui-search"></span></button>
-                        </div>
-                    </form>
                     <div class="scroll">
                         <ul class="unstyled">
                             <li class="facetitem" ng-repeat="beneficiario in beneficiarios | filter:beneficiarios_query" ng-click="toggleBeneficiarioChecked(beneficiario)">
@@ -73,12 +59,6 @@
                             <td><a href="#" class="reset-filter pull-right" ng-click="resetTipoDeProyecto()" prevent-click><small>Limpiar</small></a></td>
                         </tr>
                     </table>
-                    <form class="form-search">
-                        <div class="input-append">
-                            <input type="text" class="search-query" placeholder="Buscar tipo de proyecto" ng-model="tipos_de_proyecto_query">
-                            <button type="submit" class="btn"><span class="fui-search"></span></button>
-                        </div>
-                    </form>
                     <div class="scroll">
                         <ul class="unstyled">
                             <li class="facetitem" ng-repeat="tipo in tipos_de_proyecto | filter:tipos_de_proyecto_query" ng-click="toggleTipoDeProyectoChecked(tipo)">
@@ -98,12 +78,6 @@
                             <td><a href="#" class="reset-filter pull-right" ng-click="resetTipoDeConvocatoria()" prevent-click><small>Limpiar</small></a></td>
                         </tr>
                     </table>
-                    <form class="form-search">
-                        <div class="input-append">
-                            <input type="text" class="search-query" placeholder="Buscar tipo de convocatoria" ng-model="tipos_de_convocatoria_query">
-                            <button type="submit" class="btn"><span class="fui-search"></span></button>
-                        </div>
-                    </form>
                     <div class="scroll">
                         <ul class="unstyled">
                             <li class="facetitem" ng-repeat="tipo in tipos_de_convocatoria | filter:tipos_de_convocatoria_query" ng-click="toggleTipoDeConvocatoriaChecked(tipo)">
