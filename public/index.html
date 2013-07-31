@@ -7,12 +7,13 @@
 
     <!-- Loading Bootstrap -->
     <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
 
     <!-- Loading Flat UI -->
     <link href="assets/css/flat-ui.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="images/favicon.ico">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
 <body ng-app="funding" ng-controller="AppController">
@@ -22,7 +23,7 @@
             <img src="assets/images/logo.png"/>
         </div>
         <div class="span9">
-            <h1>Instrumentos para el fortalecimiento del sector TIC</h1>
+            <h1 style="font-size: 26px; line-height: 50px"><i>Instrumentos para el fortalecimiento del sector TIC</i></h1>
         </div>
     </div>
 </div>
@@ -30,7 +31,7 @@
     <div class="container" style="padding-bottom: 16px">
         <div class="row" style="padding-top: 16px">
             <div class="span12">
-                <p>El propósito de esta herramienta es ayudar a los posibles beneficiarios a visualizar e identificar las diversas opciones de financiamiento (disponibles en la Agencia Nacional de Promoción Científica y Tecnológica), de acuerdo a sus requerimientos y necesidades.</p>
+                <p style="font-size: 15px; line-height: 1.5">El propósito de esta herramienta es ayudar a los posibles beneficiarios a visualizar e identificar las diversas opciones de financiamiento disponibles en la Agencia Nacional de Promoción Científica y Tecnológica, de acuerdo a sus requerimientos y necesidades. <a href="#glossary" style="color: #1d6496">Ver glosario</a> </p>
             </div>
             <div class="span4">
                 <div class="well well-small facet" ng-cloak>
@@ -97,7 +98,7 @@
     <div class="container">
         <div class="span12" ng-cloak>
             <p style="margin-top: 10px">
-                Estas viendo {{ funds.length }} instrumentos
+                Resultados: estas viendo {{ funds.length }} de {{ results.length }} instrumentos
                 <span ng-show="filter.beneficiarios.length > 0">cuyos beneficiarios sean <span class="filter-items">{{ filter.beneficiarios | join:'label':', ' }}</span></span>
                 <span ng-show="filter.beneficiarios.length > 0 && filter.tipos_de_proyecto.length > 0">y</span>
                 <span ng-show="filter.tipos_de_proyecto.length > 0">cuyos tipos de proyecto sean <span class="filter-items">{{ filter.tipos_de_proyecto | join:'label':', ' }}</span></span>
@@ -109,9 +110,6 @@
 </div>
 <div class="container" style="min-height: 500px">
     <div class="row" style="padding-top: 16px">
-        <div class="span12" ng-show="funds.length > 0">
-            <p class="pull-right" ng-cloak>Mostrando 1-{{ funds.length }} de {{ funds.length }} resultados</p>
-        </div>
         <div class="span12" ng-show="funds.length == 0">
             <div class="alert alert-info">
                 <h3>No se encontraron resutlados</h3>
@@ -167,37 +165,45 @@
             </div>
             <div class="span9">
 
-                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#glossary">
-                    Glosario
-                </button>
-
-                <div id="glossary" class="collapse">
+                <div id="glossary">
                     <h6>Fondos</h6>
                     <ul class="unstyled">
                         <li>
                             <strong>Fondo para la Investigación Científica y Tecnológica (FONCyT):</strong> destinado a proyectos de investigación cuya finalidad sea la generación de nuevos conocimientos científicos y tecnológicos.
                         </li>
                         <li>
-                            <strong>Fondo Fiduciario de Promoción de la Industria del Software (FONSOFT):</strong> destinado a la promoción del fortalecimiento de las actividades de producción de software a nivel nacional.
+                            <br/><strong>Fondo Fiduciario de Promoción de la Industria del Software (FONSOFT):</strong> destinado a la promoción del fortalecimiento de las actividades de producción de software a nivel nacional.
                         </li>
                         <li>
-                            <strong>Fondo Tecnológico Argentino (FONTAR):</strong> destinado a proyectos dirigidos al mejoramiento de la productividad del sector privado a través de la innovación tecnológica.
+                            <br/><strong>Fondo Tecnológico Argentino (FONTAR):</strong> destinado a proyectos dirigidos al mejoramiento de la productividad del sector privado a través de la innovación tecnológica.
                         </li>
                     </ul>
 
-                    <h6>Tipos de pryecto</h6>
+                    <h6>Tipos de proyecto</h6>
                     <ul class="unstyled">
                         <li>
-                            <strong>Innovación tecnológica:</strong> Abarcan los nuevos productos y procesos, así como las modificaciones tecnológicas importantes en productos y procesos. Una innovación se ha realizado en el momento en que se ha introducido en el mercado (innovación de producto) o se ha utilizado en un proceso de fabricación (innovación de proceso). Las innovaciones hacen intervenir todo tipo de actividades científicas, tecnológicas, de organización, financieras y comerciales
+                            <strong>Innovación tecnológica:</strong> abarcan los nuevos productos y procesos, así como las modificaciones tecnológicas significativas en productos y procesos. Una innovación se ha realizado en el momento en que se ha introducido en el mercado (innovación de producto –bien o servicio-) o se ha utilizado en un proceso de fabricación (innovación de proceso). Las innovaciones son el conjunto de etapas científicas, tecnológicas, organizativas, financieras y comerciales, incluyendo las inversiones en nuevos conocimientos, que llevan o que intentan llevar a la implementación de productos y de procesos nuevos o mejorados. Además de la I+D, en el proceso de innovación se pueden distinguir otras actividades innovadoras como la adquisición de tecnología no incorporada y de know-how, la adquisición de tecnología incorporada, la puesta a punto de las herramientas y la ingeniería industrial, el diseño industrial, otra adquisición de capital, el inicio de la fabricación y la comercialización de productos nuevos y mejorados.
                         </li>
                         <li>
-                            <strong>Investigación y Desarrollo (I + D):</strong> consisten en trabajos sistemáticos basados en los conocimientos existentes, derivados de la investigación y/o la experiencia práctica, dirigidos a la producción de nuevos materiales, productos o dispositivos, al establecimiento de nuevos procesos, sistemas y servicios; o a la mejora sustancial de los ya existentes.
+                            <br/><strong>Investigación y Desarrollo (I + D):</strong> consisten en trabajos sistemáticos basados en los conocimientos existentes, derivados de la investigación y/o la experiencia práctica, dirigidos a la producción de nuevos materiales, productos o dispositivos, al establecimiento de nuevos procesos, sistemas y servicios; o a la mejora sustancial de los ya existentes. El término I+D engloba tres actividades:
+                            <ul>
+                                <li><i>Investigación básica</i> consiste en trabajos experimentales o teóricos que se emprenden principalmente para obtener nuevos conocimientos acerca de los fundamentos de los fenómenos y hechos observables, sin pensar en darles ninguna aplicación o utilización determinada.</li>
+                                <li><i>Investigación aplicada</i> consiste también en trabajos originales realizados para adquirir nuevos conocimientos; sin embargo, está dirigida fundamentalmente hacia un objetivo práctico específico.</li>
+                                <li><i>Desarrollo experimental</i> consiste en trabajos sistemáticos que aprovechan los conocimientos existentes obtenidos de la investigación y/o la experiencia práctica, y está dirigido a la producción de nuevos materiales, productos o dispositivos; a la puesta en marcha de nuevos procesos, sistemas y servicios, o a la mejora sustancial de los ya existentes.</li>
+                            </ul>
                         </li>
                         <li>
-                            <strong>Modernización tecnológica:</strong> tienen como objetivo la adopción de tecnología incorporada en bienes de equipo, así como la adopción de nuevos procesos y materiales, el cambio de escala de producción o las transformaciones organizativas tendientes a la optimización del nivel tecnológico de la empresa.
+                            <br/><strong>Modernización tecnológica:</strong> consisten en desarrollos tendientes a adecuar tecnologías y a introducir perfeccionamientos, que carecen usualmente de los rasgos de originalidad y novedad. Se podrá financiar por esta modalidad:
+                            <ul>
+                                <li>La modificación o mejora de tecnologías de productos, de mayor valor agregado y/o grado de diferenciación que posibiliten competir en el mercado interno e internacional;</li>
+                                <li>La modificación o mejora de tecnologías de procesos productivos que incrementen la productividad de las empresas;</li>
+                                <li>La implementación de sistemas de calidad;</li>
+                                <li>La introducción y/o cambios en la tecnología de gestión, que involucren esfuerzos de desarrollo por parte de la empresa;</li>
+                                <li>La adquisición de tecnología incorporada en equipamiento, imprescindible para los objetivos del proyecto, que impacte en la capacidad competitiva de la empresa, y que deberá estar asociada al esfuerzo de la empresa en el desarrollo de la ingeniería complementaria necesaria para la concreción del proyecto.</li>
+                            </ul>
                         </li>
                         <li>
-                            <strong>Recursos Humanos:</strong> tienen como objetivo fortalecer y consolidar Capital Humano aplicado a la industria del SSI así como promover la repatriación de investigadores, la capacitación de calidad, la inclusión de doctores en empresas y reuniones científicas, entre otros.
+                            <br/><strong>Recursos Humanos:</strong> tienen como objetivo fortalecer y consolidar la formación de capital humano, así como promover la repatriación de investigadores, la capacitación en temas de calidad, la inserción de doctores en empresas y la participación en reuniones científicas, entre otros.
                         </li>
                     </ul>
                 </div>
